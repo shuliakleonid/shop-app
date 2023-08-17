@@ -1,0 +1,52 @@
+version: '3'
+services:
+
+  main:
+    build:
+      context: .
+      dockerfile: ./apps/main/Dockerfile
+    env_file:
+      - .env
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+    ports:
+      - '5010:5010'
+
+  catalog:
+   build:
+     context: .
+     dockerfile: ./apps/catalog/Dockerfile
+   env_file:
+     - .env
+   volumes:
+     - .:/usr/src/app
+     - /usr/src/app/node_modules
+   ports:
+    - '5011:5011'
+
+  orders:
+    build:
+      context: .
+      dockerfile: ./apps/orders/Dockerfile
+    env_file:
+      - .env
+    volumes:
+         - .:/usr/src/app
+         - /usr/src/app/node_modules
+    ports:
+      - '5012:5012'
+
+  shopping-cart:
+    build:
+      context: .
+      dockerfile: ./apps/shopping-cart/Dockerfile
+    env_file:
+      - .env
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+    ports:
+      - '5013:5013'
+
+
