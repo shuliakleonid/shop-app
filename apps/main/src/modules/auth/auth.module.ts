@@ -11,14 +11,16 @@ import { ApiJwtModule } from '../api-jwt/api-jwt.module';
 import { SessionsRepository } from '../sessions/infrastructure/sessions-repository';
 import { LoginUseCase } from './application/use-cases/login.use-case';
 import { LogoutUseCase } from './application/use-cases/logout.use-case';
+import { GenerateNewTokensUseCase } from './application/use-cases/update-tokens.use-case';
+import { CustomerQueryRepository } from '../customers/infrastructure/users.query-repository';
 
-const useCases = [RegisterUserUseCase, LoginUseCase, LogoutUseCase];
+const useCases = [RegisterUserUseCase, LoginUseCase, LogoutUseCase, GenerateNewTokensUseCase];
 const strategies = [LocalStrategy, JwtStrategy];
 
 @Module({
   imports: [CqrsModule, ApiConfigModule, CustomersModule, ApiJwtModule],
   controllers: [AuthController],
-  providers: [AuthService, SessionsRepository, ...useCases, ...strategies],
+  providers: [AuthService, SessionsRepository, CustomerQueryRepository, ...useCases, ...strategies],
   exports: [AuthService],
 })
 export class AuthModule {}

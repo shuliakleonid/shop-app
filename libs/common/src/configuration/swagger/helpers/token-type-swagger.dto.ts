@@ -1,7 +1,10 @@
-import { PickType } from '@nestjs/swagger';
+import { ApiProperty, PickType } from '@nestjs/swagger';
 
 class TokensType {
+  @ApiProperty()
   public accessToken: string;
+
+  @ApiProperty()
   public refreshToken: string;
   constructor(accessToken: string, refreshToken: string) {
     this.accessToken = accessToken;

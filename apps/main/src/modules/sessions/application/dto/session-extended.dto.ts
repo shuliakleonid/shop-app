@@ -5,7 +5,7 @@ export class SessionExtendedDto {
   deviceId: number;
 
   @ApiProperty()
-  userId: number;
+  customerId: number;
 
   @ApiProperty()
   exp: number;

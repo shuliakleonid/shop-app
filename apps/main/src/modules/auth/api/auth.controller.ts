@@ -1,10 +1,12 @@
 import { ApiTags } from '@nestjs/swagger';
-import { Body, Controller, HttpCode, HttpStatus, Ip, Post, Res, Headers, UseGuards } from '@nestjs/common';
+import { Body, Controller, HttpCode, HttpStatus, Ip, Post, Res, Headers, UseGuards, Get } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
 import {
   SwaggerDecoratorsByLogin,
   SwaggerDecoratorsByLogout,
+  SwaggerDecoratorsByMe,
   SwaggerDecoratorsByRegistration,
+  SwaggerDecoratorsByUpdateTokens,
 } from '../swagger/swagger.auth.decorators';
 import { RegisterInputDto } from './dtos/request/register.dto';
 import { RegisterUserCommand } from '../application/use-cases/register-user.use-case';
@@ -21,11 +23,18 @@ import { RefreshTokenGuard } from './guards/refresh-token.guard';
 import { SessionData } from '../../../decorators/session-data.decorator';
 import { SessionDto } from '../../sessions/application/dto/session.dto';
 import { LogoutCommand } from '../application/use-cases/logout.use-case';
+import { UpdateTokensCommand } from '../application/use-cases/update-tokens.use-case';
+import { MeViewDto } from './dtos/response/me.dto';
+import { CustomerQueryRepository } from '../../customers/infrastructure/users.query-repository';
+import { JwtAuthGuard } from './guards/jwt-auth.guard';
 
 @ApiTags('Auth')
 @Controller('auth')
 export class AuthController {
-  constructor(private readonly commandBus: CommandBus) {}
+  constructor(
+    private readonly commandBus: CommandBus,
+    private readonly customerQueryRepository: CustomerQueryRepository,
+  ) {}
 
   @SwaggerDecoratorsByRegistration()
   @Post('registration')
@@ -68,7 +77,6 @@ export class AuthController {
     return notification.getData();
   }
 
-  /*
   @SwaggerDecoratorsByUpdateTokens()
   @Post('update-tokens')
   @UseGuards(RefreshTokenGuard)
@@ -92,9 +100,9 @@ export class AuthController {
   @SwaggerDecoratorsByMe()
   @Get('me')
   @UseGuards(JwtAuthGuard)
-  async getMyInfo(@CurrentUserId() userId: number): Promise<MeViewDto> {
-    const user = await this.usersQueryRepository.findUserById(userId);
+  async getMyInfo(@CurrentCustomerId() customerId: number): Promise<MeViewDto> {
+    const user = await this.customerQueryRepository.findUserById(customerId);
     if (!user) return;
     return new MeViewDto(user);
-  }*/
+  }
 }
