@@ -19,7 +19,7 @@ model Customer {
   updatedAt DateTime  @updatedAt
   sessions  Session[]
 
-  @@map("Users")
+  @@map("Customers")
 }
 
 model Session {
