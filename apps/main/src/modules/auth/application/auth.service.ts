@@ -19,10 +19,10 @@ export class AuthService {
   ) {}
 
   async checkCredentialsOfCustomer(dto: LoginInputDto): Promise<number | null> {
-    const foundUser = await this.customerRepository.findByEmail(dto.email);
+    const foundCustomer = await this.customerRepository.findByEmail(dto.email);
 
-    if (!foundUser || !(await this.passwordIsCorrect(dto.password, foundUser.password))) return null;
-    return foundUser.id;
+    if (!foundCustomer || !(await this.passwordIsCorrect(dto.password, foundCustomer.password))) return null;
+    return foundCustomer.id;
   }
 
   private async passwordIsCorrect(password: string, passwordHash: string) {

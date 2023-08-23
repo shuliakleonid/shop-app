@@ -1,7 +1,11 @@
 import { ApiTags } from '@nestjs/swagger';
 import { Body, Controller, HttpCode, HttpStatus, Ip, Post, Res, Headers, UseGuards } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
-import { SwaggerDecoratorsByLogin, SwaggerDecoratorsByRegistration } from '../swagger/swagger.auth.decorators';
+import {
+  SwaggerDecoratorsByLogin,
+  SwaggerDecoratorsByLogout,
+  SwaggerDecoratorsByRegistration,
+} from '../swagger/swagger.auth.decorators';
 import { RegisterInputDto } from './dtos/request/register.dto';
 import { RegisterUserCommand } from '../application/use-cases/register-user.use-case';
 import { ResultNotification } from '../../../../../../libs/common/src/validators/result-notification';
@@ -13,6 +17,10 @@ import { LoginSuccessViewDto } from './dtos/response/login-success.dto';
 import { Response } from 'express';
 import { LocalAuthGuard } from './guards/local-auth.guard';
 import { CheckLoginBodyFieldsGuard } from '../../../guards/check-login-body-fields.guard';
+import { RefreshTokenGuard } from './guards/refresh-token.guard';
+import { SessionData } from '../../../decorators/session-data.decorator';
+import { SessionDto } from '../../sessions/application/dto/session.dto';
+import { LogoutCommand } from '../application/use-cases/logout.use-case';
 
 @ApiTags('Auth')
 @Controller('auth')
@@ -47,7 +55,6 @@ export class AuthController {
     res.cookie('refreshToken', refreshToken, { httpOnly: true, secure: true, sameSite: 'none' });
     return { accessToken };
   }
-  /*
 
   @SwaggerDecoratorsByLogout()
   @Post('logout')
@@ -55,12 +62,13 @@ export class AuthController {
   @HttpCode(HttpStatus.NO_CONTENT)
   async logout(@SessionData() sessionData: SessionDto, @Res({ passthrough: true }) res: Response): Promise<null> {
     const notification = await this.commandBus.execute<LogoutCommand, ResultNotification<null>>(
-      new LogoutCommand(sessionData.userId, sessionData.deviceId),
+      new LogoutCommand(sessionData.customerId, sessionData.deviceId),
     );
     res.clearCookie('refreshToken');
     return notification.getData();
   }
 
+  /*
   @SwaggerDecoratorsByUpdateTokens()
   @Post('update-tokens')
   @UseGuards(RefreshTokenGuard)

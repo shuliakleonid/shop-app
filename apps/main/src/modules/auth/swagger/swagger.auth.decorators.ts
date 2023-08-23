@@ -43,3 +43,16 @@ export function SwaggerDecoratorsByLogin(): MethodDecorator {
     }),
   );
 }
+
+export function SwaggerDecoratorsByLogout(): MethodDecorator {
+  return applyDecorators(
+    ApiOperation({
+      summary: 'In cookie client must send correct refresh Token that will be revoked',
+    }),
+    ApiResponse({ status: HttpStatus.NO_CONTENT, description: 'success' }),
+    ApiResponse({
+      status: HttpStatus.UNAUTHORIZED,
+      description: 'JWT refreshToken inside cookie is missing, expired or incorrect',
+    }),
+  );
+}

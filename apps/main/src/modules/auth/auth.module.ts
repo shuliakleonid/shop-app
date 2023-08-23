@@ -10,8 +10,9 @@ import { CustomersModule } from '../customers/customers.module';
 import { ApiJwtModule } from '../api-jwt/api-jwt.module';
 import { SessionsRepository } from '../sessions/infrastructure/sessions-repository';
 import { LoginUseCase } from './application/use-cases/login.use-case';
+import { LogoutUseCase } from './application/use-cases/logout.use-case';
 
-const useCases = [RegisterUserUseCase, LoginUseCase];
+const useCases = [RegisterUserUseCase, LoginUseCase, LogoutUseCase];
 const strategies = [LocalStrategy, JwtStrategy];
 
 @Module({

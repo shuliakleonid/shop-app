@@ -8,6 +8,7 @@ import { DeleteSelectedSessionCommand } from '../application/use-cases/delete-se
 import { ResultNotification } from '../../../../../../libs/common/src/validators/result-notification';
 import { TerminateAllSessionsExceptCurrentCommand } from '../application/use-cases/terminate-all-sessions-except-current-use.case';
 import { DevicesViewModel } from './session.view.dto';
+import { RefreshTokenGuard } from '../../auth/api/guards/refresh-token.guard';
 
 @ApiTags(`Device's`)
 @ApiBearerAuth()
