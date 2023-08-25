@@ -8,8 +8,8 @@ RUN yarn install
 
 COPY . .
 
-RUN yarn build catalog
+RUN yarn build shopping-cart
 
 #EXPOSE 5001
 
-CMD sh -c "node ./dist/shopping-card/main"
+CMD sh -c "node ./dist/apps/shopping-cart/main"

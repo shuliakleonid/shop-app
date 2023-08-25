@@ -16,6 +16,7 @@
         }
       }
     ],
+    "webpack": true,
     "tsConfigPath": "apps/main/tsconfig.app.json"
   },
   "monorepo": true,
@@ -32,29 +33,29 @@
     },
     "catalog": {
       "type": "application",
-      "root": "apps/payments-ms",
+      "root": "apps/catalog",
       "entryFile": "main",
-      "sourceRoot": "apps/payments-ms/src",
+      "sourceRoot": "apps/catalog/src",
       "compilerOptions": {
         "tsConfigPath": "apps/catalog/tsconfig.app.json"
       }
     },
     "orders": {
       "type": "application",
-      "root": "apps/images-ms",
+      "root": "apps/orders",
       "entryFile": "main",
-      "sourceRoot": "apps/images-ms/src",
+      "sourceRoot": "apps/orders/src",
       "compilerOptions": {
         "tsConfigPath": "apps/orders/tsconfig.app.json"
       }
     },
     "shopping-cart": {
       "type": "application",
-      "root": "apps/images-ms",
+      "root": "apps/shopping-cart",
       "entryFile": "main",
       "sourceRoot": "apps/shopping-cart/src",
       "compilerOptions": {
-        "tsConfigPath": "apps/images-ms/tsconfig.app.json"
+        "tsConfigPath": "apps/shopping-cart/tsconfig.app.json"
       }
     }
   },

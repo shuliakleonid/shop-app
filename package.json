@@ -10,6 +10,9 @@
     "format": "prettier --write \\\"apps/main/src/**/*.ts\\\" \\\"test/**/*.ts\\\"",
     "start": "nest start",
     "start:dev": "nest start --watch",
+    "start:dev catalog": "nest start catalog --watch",
+    "start:dev orders": "nest start orders --watch",
+    "start:dev shopping-cart": "nest start shopping-cart --watch",
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/main",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
@@ -28,6 +31,7 @@
     "@nestjs/passport": "^10.0.1",
     "@nestjs/platform-express": "^9.0.0",
     "@nestjs/swagger": "^7.1.8",
+    "@nestjs/typeorm": "^10.0.0",
     "@prisma/client": "5.1.1",
     "@types/passport-jwt": "^3.0.9",
     "@types/passport-local": "^1.0.35",
@@ -36,11 +40,14 @@
     "class-validator": "^0.14.0",
     "cookie-parser": "^1.4.6",
     "joi": "^17.9.2",
+    "kafkajs": "^2.2.4",
     "passport": "^0.6.0",
     "passport-jwt": "^4.0.1",
     "passport-local": "^1.0.0",
+    "pg": "^8.11.3",
     "reflect-metadata": "^0.1.13",
-    "rxjs": "^7.2.0"
+    "rxjs": "^7.2.0",
+    "typeorm": "^0.3.17"
   },
   "devDependencies": {
     "@nestjs/cli": "^9.0.0",
