@@ -773,6 +773,14 @@
   resolved "https://registry.yarnpkg.com/@nestjs/mapped-types/-/mapped-types-2.0.2.tgz#c8a090a8d22145b85ed977414c158534210f2e4f"
   integrity sha512-V0izw6tWs6fTp9+KiiPUbGHWALy563Frn8X6Bm87ANLRuE46iuBMD5acKBDP5lKL/75QFvrzSJT7HkCbB0jTpg==
 
+"@nestjs/microservices@^10.2.1":
+  version "10.2.1"
+  resolved "https://registry.yarnpkg.com/@nestjs/microservices/-/microservices-10.2.1.tgz#d874bfe6757570597ab10aec06b3a964c275e65c"
+  integrity sha512-jzUw/cnU0vJ1Mn5iFEDvml70t9FT//M1nlsmTxvq3Bd1J7niWstTcrEfIVXFsrLb2/WbYeP31LRsVwkpbkWMmA==
+  dependencies:
+    iterare "1.2.1"
+    tslib "2.6.1"
+
 "@nestjs/passport@^10.0.1":
   version "10.0.1"
   resolved "https://registry.yarnpkg.com/@nestjs/passport/-/passport-10.0.1.tgz#4a745cb4acf01ef8fd56b9ec1349ac74165b098f"
@@ -5199,15 +5207,15 @@ tslib@2.5.3:
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-2.5.3.tgz#24944ba2d990940e6e982c4bea147aba80209913"
   integrity sha512-mSxlJJwl3BMEQCUNnxXBU9jP4JBktcEGhURcPR6VQVlnP0FdDEsIaz0C35dXNGLyRfrATNofF0F5p2KPxQgB+w==
 
+tslib@2.6.1, tslib@^2.1.0:
+  version "2.6.1"
+  resolved "https://registry.yarnpkg.com/tslib/-/tslib-2.6.1.tgz#fd8c9a0ff42590b25703c0acb3de3d3f4ede0410"
+  integrity sha512-t0hLfiEKfMUoqhG+U1oid7Pva4bbDPHYfJNiB7BiIjRkj1pyC++4N3huJfqY6aRH6VTB0rvtzQwjM4K6qpfOig==
+
 tslib@^1.8.1:
   version "1.14.1"
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-1.14.1.tgz#cf2d38bdc34a134bcaf1091c41f6619e2f672d00"
   integrity sha512-Xni35NKzjgMrwevysHTCArtLDpPvye8zV/0E4EyYn43P7/7qvQwPh9BGkHewbMulVntbigmcT7rdX3BNo9wRJg==
-
-tslib@^2.1.0:
-  version "2.6.1"
-  resolved "https://registry.yarnpkg.com/tslib/-/tslib-2.6.1.tgz#fd8c9a0ff42590b25703c0acb3de3d3f4ede0410"
-  integrity sha512-t0hLfiEKfMUoqhG+U1oid7Pva4bbDPHYfJNiB7BiIjRkj1pyC++4N3huJfqY6aRH6VTB0rvtzQwjM4K6qpfOig==
 
 tslib@^2.5.0:
   version "2.6.2"
