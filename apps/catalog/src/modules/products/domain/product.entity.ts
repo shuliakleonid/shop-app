@@ -33,4 +33,16 @@ export class Product extends BaseDateEntity {
     instanceProduct.description = product.description;
     return instanceProduct;
   }
+
+  static update(product: Product, updatedData: { price: number; name: string; description: string }): void {
+    if (updatedData.price !== undefined) {
+      product.price = updatedData.price;
+    }
+    if (updatedData.name !== undefined) {
+      product.name = updatedData.name;
+    }
+    if (updatedData.description !== undefined) {
+      product.description = updatedData.description;
+    }
+  }
 }
