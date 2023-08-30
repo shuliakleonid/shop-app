@@ -13,4 +13,8 @@ export class UpdateProductDto {
   @ApiProperty()
   @IsNumber()
   price: number;
+
+  @ApiProperty()
+  @IsNumber()
+  quantity: number;
 }

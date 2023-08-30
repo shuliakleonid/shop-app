@@ -20,10 +20,10 @@ export class UpdateProductsUseCase
   }
 
   async executeUseCase(command: UpdateProductsCommand): Promise<void> {
-    const { name, price, description, id } = command.dto;
+    const { name, price, description, id, quantity } = command.dto;
     const product = await this.validate(id);
 
-    Product.update(product, { name, description, price });
+    Product.update(product, { name, description, price, quantity });
     await this.productsRepository.save(product);
   }
 

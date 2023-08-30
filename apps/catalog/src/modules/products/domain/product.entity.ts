@@ -1,9 +1,8 @@
 import { Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
-import { BaseDateEntity } from '../../../../../../libs/common/src/entities/base-date.entity';
 import { Category } from '../../categories/domain/category.entity';
 
 @Entity()
-export class Product extends BaseDateEntity {
+export class Product {
   @PrimaryGeneratedColumn('increment')
   id: number;
 
@@ -12,6 +11,9 @@ export class Product extends BaseDateEntity {
 
   @Column()
   price: number;
+
+  @Column()
+  quantity: number;
 
   @Column()
   description: string;
@@ -30,11 +32,15 @@ export class Product extends BaseDateEntity {
     instanceProduct.id = null;
     instanceProduct.name = product.name;
     instanceProduct.price = product.price;
+    instanceProduct.quantity = 0;
     instanceProduct.description = product.description;
     return instanceProduct;
   }
 
-  static update(product: Product, updatedData: { price: number; name: string; description: string }): void {
+  static update(
+    product: Product,
+    updatedData: { quantity: number; price: number; name: string; description: string },
+  ): void {
     if (updatedData.price !== undefined) {
       product.price = updatedData.price;
     }
@@ -43,6 +49,9 @@ export class Product extends BaseDateEntity {
     }
     if (updatedData.description !== undefined) {
       product.description = updatedData.description;
+    }
+    if (updatedData.quantity !== undefined) {
+      product.quantity = updatedData.quantity;
     }
   }
 }

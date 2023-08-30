@@ -19,7 +19,7 @@ model Customer {
   updatedAt DateTime  @updatedAt
   sessions  Session[]
 
-  @@map("Customers")
+  @@map("customers")
 }
 
 model Session {
@@ -31,7 +31,7 @@ model Session {
   iat        Int?
   customer   Customer? @relation(fields: [customerId], references: [id])
 
-  @@map("Sessions")
+  @@map("sessions")
 }
 
 model Administrator {
@@ -40,7 +40,7 @@ model Administrator {
   password          String
   AdministratorRole AdministratorRole[]
 
-  @@map("Administrator")
+  @@map("administrator")
 }
 
 model AdministratorRole {
@@ -50,7 +50,7 @@ model AdministratorRole {
   administrator   Administrator @relation(fields: [administratorId], references: [id])
   role            Role          @relation(fields: [roleId], references: [id])
 
-  @@map("AdministratorRole")
+  @@map("administratorRole")
 }
 
 model Role {
@@ -60,5 +60,5 @@ model Role {
   description       String
   AdministratorRole AdministratorRole[]
 
-  @@map("Role")
+  @@map("role")
 }
