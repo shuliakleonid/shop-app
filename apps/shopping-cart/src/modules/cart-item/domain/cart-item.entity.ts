@@ -1,4 +1,15 @@
-import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  OneToOne,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+} from 'typeorm';
+import { OrderDetails } from '../../../../../orders/src/modules/orders/domain/order-details.entity';
+import { Product } from '../../../../../catalog/src/modules/products/domain/product.entity';
 
 @Entity()
 export class CartItem {
@@ -14,17 +25,22 @@ export class CartItem {
   @UpdateDateColumn({ type: 'timestamp' })
   updateDate: Date;
 
+  @ManyToOne(() => OrderDetails, OrderDetails => OrderDetails.cartItem)
+  @JoinColumn({ name: 'orderDetailsId' })
+  orderDetails: OrderDetails;
+
   @Column()
   customerId: number;
 
-  @Column()
-  productId: number;
+  @OneToOne(() => Product)
+  @JoinColumn({ name: 'productId' })
+  product: Product;
 
   static create(cartItem: { quantity: number; productId: number; customerId: number }) {
     const instanceCartItem = new CartItem();
     instanceCartItem.id = null;
     instanceCartItem.quantity = cartItem.quantity;
-    instanceCartItem.productId = cartItem.productId;
+    instanceCartItem.product.id = cartItem.productId;
     instanceCartItem.customerId = cartItem.customerId;
     return instanceCartItem;
   }
