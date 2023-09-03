@@ -12,8 +12,6 @@ import Joi from 'joi';
       validationSchema: Joi.object({
         NODE_ENV: Joi.string().valid('development', 'production', 'test').default('development'),
         // PORT: Joi.number(),
-        // PORT_IMAGES: Joi.number(),
-        // PORT_PAYMENTS: Joi.number(),
         //
         // SERVER_URL_MAIN: Joi.string(),
         // SERVER_URL_CART: Joi.string(),

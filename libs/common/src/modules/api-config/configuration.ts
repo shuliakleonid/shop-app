@@ -28,6 +28,18 @@ export const configuration = () => ({
     REFRESH_TOKEN_SECRET: process.env.REFRESH_TOKEN_SECRET,
     EXPIRED_REFRESH: process.env.EXPIRED_REFRESH,
   },
+  payment: {
+    stripe: {
+      API_KEY_STRIPE: process.env.API_KEY_STRIPE,
+      SECRET_HOOK_STRIPE: process.env.SECRET_HOOK_STRIPE,
+      STRIPE_CURRENCY: process.env.STRIPE_CURRENCY,
+    },
+  },
+  dev: {
+    TOKEN_NGROK: process.env.TOKEN_NGROK,
+    CURRENT_APP_BASE_URL: process.env.CURRENT_APP_BASE_URL,
+    TEST_CLIENT_URL: process.env.TEST_CLIENT_URL,
+  },
 });
 
 export type EnvType = ReturnType<typeof configuration>;

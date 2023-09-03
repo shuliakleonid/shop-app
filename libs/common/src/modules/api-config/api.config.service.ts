@@ -53,4 +53,24 @@ export class ApiConfigService {
   get EXPIRED_REFRESH(): string {
     return this.configService.get('jwt.EXPIRED_REFRESH', { infer: true });
   }
+
+  get TOKEN_NGROK(): string {
+    return this.configService.get('dev.TOKEN_NGROK', { infer: true });
+  }
+
+  get API_KEY_STRIPE(): string {
+    return this.configService.get('payment.stripe.API_KEY_STRIPE', { infer: true });
+  }
+
+  get SECRET_HOOK_STRIPE(): string {
+    return this.configService.get('payment.stripe.SECRET_HOOK_STRIPE', { infer: true });
+  }
+
+  get TEST_CLIENT_URL(): string {
+    return this.configService.get('dev.TEST_CLIENT_URL', { infer: true });
+  }
+
+  get STRIPE_CURRENCY(): string {
+    return this.configService.get('payment.stripe.STRIPE_CURRENCY', { infer: true });
+  }
 }
