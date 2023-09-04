@@ -21,8 +21,7 @@ const useCases = [
 @Module({
   imports: [CqrsModule, DatabaseModule, TypeOrmModule.forFeature([OrderDetails, Product])],
   controllers: [OrdersController],
-
   providers: [OrdersRepository, OrdersQueryRepository, ...useCases],
-  exports: [OrdersRepository],
+  exports: [OrdersRepository, OrdersQueryRepository],
 })
 export class OrdersModule {}

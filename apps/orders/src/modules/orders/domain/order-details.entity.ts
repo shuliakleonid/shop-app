@@ -28,8 +28,11 @@ export class OrderDetails {
   @Column({ nullable: true })
   paymentId: number;
 
-  @OneToMany(() => CartItem, CartItem => CartItem)
-  cartItem: CartItem[];
+  // @OneToMany(() => CartItem, CartItem => CartItem)
+  // cartItem: CartItem[];
+
+  @Column()
+  cartItemId: number;
 
   @CreateDateColumn({ type: 'timestamp' })
   creationDate: Date;

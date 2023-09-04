@@ -14,35 +14,50 @@ export class PaymentStripeService {
     this.currency = this.configService.STRIPE_CURRENCY;
   }
 
-  public async createCustomer(name: string, email: string) {
-    return this.stripe.customers.create({ name, email });
-  }
+  // public async createCustomer(name: string, email: string) {
+  //   return this.stripe.customers.create({ name, email });
+  // }
 
   async createPaymentSession(params: {
     customerId: number;
-    email: string;
-    userName: string;
+    // email: string;
+    // userName: string;
     totalAmount: number;
-    orderId: string;
+    orderId: number;
   }) {
     const defaultParams = {
-      mode: 'subscription',
+      mode: 'payment',
       payment_method_types: ['card'],
+      // payment_method:['card'],
       success_url: `${this.serverUrl}` + '/profile/settings/edit?success=true',
+      // confirm: true,
       cancel_url: `${this.serverUrl}/profile/settings/edit?success=false`,
-      expires_at: Math.floor(Date.now() / 1000) + 30 * 60, // Configured to expire after 30 minutes.
-      customer: params.customerId.toString(),
-      amount: Number(params.totalAmount) * 100,
+      expires_at: Math.floor(Date.now() / 1000) + 30 * 60,
+      line_items: [
+        {
+          price_data: {
+            currency: 'usd', // Валюта платежа
+            product_data: {
+              name: 'Product Name', // Название товара или услуги
+            },
+            unit_amount: 1000, // Сумма платежа в минимальных единицах валюты (например, центы для доллара США)
+          },
+          quantity: 1, // Количество товара или услуги
+        },
+      ],
+      // customer: params.customerId.toString(),
+      // amount: Number(params.totalAmount) * 100,
       currency: this.currency,
       metadata: { orderId: params.orderId },
-    } as Stripe.Checkout.SessionCreateParams;
+    } as unknown as Stripe.Checkout.SessionCreateParams;
 
-    if (!params.customerId) {
-      const customer = await this.createCustomer(params.userName, params.email);
-      defaultParams['customer'] = customer.id;
-    }
+    // if (!params.customerId) {
+    //   const customer = await this.createCustomer(params.userName, params.email);
+    //   defaultParams['customer'] = customer.id;
+    // }
     try {
       const session = await this.stripe.checkout.sessions.create(defaultParams);
+      console.log('-> session', session);
       return session;
     } catch (error) {
       this.logger.error(error, 'error');

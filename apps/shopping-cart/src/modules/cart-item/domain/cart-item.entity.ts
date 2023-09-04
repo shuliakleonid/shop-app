@@ -25,22 +25,25 @@ export class CartItem {
   @UpdateDateColumn({ type: 'timestamp' })
   updateDate: Date;
 
-  @ManyToOne(() => OrderDetails, OrderDetails => OrderDetails.cartItem)
-  @JoinColumn({ name: 'orderDetailsId' })
-  orderDetails: OrderDetails;
+  // @ManyToOne(() => OrderDetails, OrderDetails => OrderDetails)
+  // @JoinColumn({ name: 'id' })
+  // orderDetails: OrderDetails;
+  @Column()
+  orderId: number;
 
   @Column()
   customerId: number;
 
-  @OneToOne(() => Product)
-  @JoinColumn({ name: 'productId' })
-  product: Product;
+  // @OneToOne(() => Product)
+  // @JoinColumn({ name: 'productId' })
+  @Column()
+  productId: number;
 
   static create(cartItem: { quantity: number; productId: number; customerId: number }) {
     const instanceCartItem = new CartItem();
     instanceCartItem.id = null;
     instanceCartItem.quantity = cartItem.quantity;
-    instanceCartItem.product.id = cartItem.productId;
+    instanceCartItem.productId = cartItem.productId;
     instanceCartItem.customerId = cartItem.customerId;
     return instanceCartItem;
   }

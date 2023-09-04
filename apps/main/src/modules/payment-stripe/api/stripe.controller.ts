@@ -13,8 +13,7 @@ export class StripeController {
   @HttpCode(204)
   @Post('stripe/webhook')
   async stripeHook(@Signature() inputData: PaymentInputData) {
-
-    console.log("=>(stripe.controller.ts:21) inputData", inputData);
+    console.log('=>(stripe.controller.ts:21) inputData', inputData);
 
     await this.stripePaymentWebhookService.createEventSession(inputData.signature, inputData.body);
   }

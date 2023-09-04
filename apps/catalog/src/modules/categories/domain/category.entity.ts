@@ -1,5 +1,4 @@
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
-import { Product } from '../../products/domain/product.entity';
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 export class Category {
@@ -9,8 +8,11 @@ export class Category {
   @Column()
   name: string;
 
-  @OneToMany(() => Product, product => product.category)
-  products: Product[];
+  // @OneToMany(() => Product, product => product.category)
+  // products: Product[];
+
+  @Column()
+  productId: number;
 
   static create(category: { name: string }): Category {
     const instanceCategory = new Category();

@@ -1,5 +1,4 @@
-import { Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
-import { Category } from '../../categories/domain/category.entity';
+import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 
 @Entity()
 export class Product {
@@ -24,8 +23,12 @@ export class Product {
   @UpdateDateColumn({ type: 'timestamp' })
   updateDate: Date;
 
-  @ManyToOne(() => Category, category => category.products)
-  category: Category;
+  // @ManyToOne(() => Category, category => category.products)
+  // @JoinTable()
+  // category: Category;
+
+  @Column({ nullable: true })
+  categoryId: number;
 
   static create(product: { price: number; name: string; description: string }): Product {
     const instanceProduct = new Product();

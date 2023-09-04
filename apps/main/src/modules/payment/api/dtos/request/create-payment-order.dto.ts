@@ -1,6 +1,8 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { IsNumber } from 'class-validator';
 
 export class CreatePaymentOrderDto {
   @ApiProperty()
-  orderId: string;
+  @IsNumber()
+  orderId: number;
 }

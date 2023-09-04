@@ -11,9 +11,9 @@ export class CartItemDto {
   @IsNumber()
   productId: number;
 
-  constructor(cart: { id: number; product: Product }) {
+  constructor(cart: { id: number; productId: number }) {
     this.id = cart.id;
-    this.productId = cart.product.id;
+    this.productId = cart.productId;
   }
 }
 

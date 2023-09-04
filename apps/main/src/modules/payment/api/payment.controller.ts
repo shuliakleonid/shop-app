@@ -12,7 +12,7 @@ import { ApiTags } from '@nestjs/swagger';
 export class PaymentStripeController {
   constructor(private readonly commandBus: CommandBus) {}
   @Post('order')
-  async paymentOrder(@Body() paymentOrder: CreatePaymentOrderDto, @CurrentCustomerId() customerId: Customer) {
+  async paymentOrder(@Body() paymentOrder: CreatePaymentOrderDto, @CurrentCustomerId() customerId: number) {
     const notification = await this.commandBus.execute<CreatePaymentOrderCommand, ResultNotification<string>>(
       new CreatePaymentOrderCommand(customerId, paymentOrder),
     );
