@@ -28,15 +28,13 @@ export class PaymentStripeService {
     const defaultParams = {
       mode: 'payment',
       payment_method_types: ['card'],
-      // payment_method:['card'],
       success_url: `${this.serverUrl}` + '/profile/settings/edit?success=true',
-      // confirm: true,
       cancel_url: `${this.serverUrl}/profile/settings/edit?success=false`,
       expires_at: Math.floor(Date.now() / 1000) + 30 * 60,
       line_items: [
         {
           price_data: {
-            currency: 'usd', // Валюта платежа
+            currency: this.currency,
             product_data: {
               name: 'Product Name', // Название товара или услуги
             },
@@ -45,8 +43,7 @@ export class PaymentStripeService {
           quantity: 1, // Количество товара или услуги
         },
       ],
-      // customer: params.customerId.toString(),
-      // amount: Number(params.totalAmount) * 100,
+      customer: params.customerId.toString(),
       currency: this.currency,
       metadata: { orderId: params.orderId },
     } as unknown as Stripe.Checkout.SessionCreateParams;

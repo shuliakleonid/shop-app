@@ -8,13 +8,14 @@ import { OrdersQueryRepository } from '../../../../orders/src/modules/orders/inf
 import { DatabaseModule } from '../../../../../libs/common/src/modules/database/database.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { OrderDetails } from '../../../../orders/src/modules/orders/domain/order-details.entity';
+import { StripePaymentWebhookService } from '../payment-stripe/application/stripe-payment-webhook.service';
 
 const useCases = [CreatePaymentOrderUseCase];
 
 @Module({
   imports: [ApiConfigModule, CqrsModule, DatabaseModule, TypeOrmModule.forFeature([OrderDetails])],
   controllers: [PaymentStripeController],
-  providers: [PaymentStripeService, OrdersQueryRepository, ...useCases],
+  providers: [PaymentStripeService, OrdersQueryRepository, StripePaymentWebhookService, ...useCases],
   exports: [],
 })
 export class PaymentModule {}

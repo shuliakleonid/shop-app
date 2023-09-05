@@ -29,28 +29,30 @@ services:
    ports:
     - '5011:5011'
 
-#  orders:
-#    build:
-#      context: .
-#      dockerfile: ./apps/orders/Dockerfile
-#    env_file:
-#      - .env
-#    volumes:
-#         - .:/usr/src/app
-#         - /usr/src/app/node_modules
-#    ports:
-#      - '5012:5012'
+  orders:
+    build:
+      context: .
+      dockerfile: ./apps/orders/Dockerfile
+      target: development
+    env_file:
+      - .env
+    volumes:
+         - .:/usr/src/app
+         - /usr/src/app/node_modules
+    ports:
+      - '5012:5012'
 
-#  shopping-cart:
-#    build:
-#      context: .
-#      dockerfile: ./apps/shopping-cart/Dockerfile
-#    env_file:
-#      - .env
-#    volumes:
-#      - .:/usr/src/app
-#      - /usr/src/app/node_modules
-#    ports:
-#      - '5013:5013'
+  shopping-cart:
+    build:
+      context: .
+      dockerfile: ./apps/shopping-cart/Dockerfile
+      target: development
+    env_file:
+      - .env
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+    ports:
+      - '5013:5013'
 
 
