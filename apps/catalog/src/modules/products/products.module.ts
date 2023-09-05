@@ -1,6 +1,6 @@
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Module } from '@nestjs/common';
-import { DatabaseModule } from '../../../../../libs/common/src/modules/database/database.module';
+import { DatabaseModule } from '@common/modules/database/database.module';
 import { Product } from './domain/product.entity';
 import { ProductsController } from './api/products.controller';
 import { CqrsModule } from '@nestjs/cqrs';

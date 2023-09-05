@@ -1,5 +1,4 @@
-import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
-import { CartItem } from '../../../../../shopping-cart/src/modules/cart-item/domain/cart-item.entity';
+import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 
 export enum OrderState {
   REJECTED = 'REJECTED',

@@ -3,7 +3,7 @@ import { LocalStrategy } from './api/strategies/local.strategy';
 import { JwtStrategy } from './api/strategies/jwt.strategy';
 import { Module } from '@nestjs/common';
 import { CqrsModule } from '@nestjs/cqrs';
-import { ApiConfigModule } from '../../../../../libs/common/src/modules/api-config/api.config.module';
+import { ApiConfigModule } from '@common/modules/api-config/api.config.module';
 import { AuthController } from './api/auth.controller';
 import { AuthService } from './application/auth.service';
 import { CustomersModule } from '../customers/customers.module';

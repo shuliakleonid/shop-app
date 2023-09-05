@@ -1,10 +1,10 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
-import { BaseNotificationUseCase } from '../../../../../../../libs/common/src/main/use-cases/base-notification.use-case';
+import { BaseNotificationUseCase } from '@common/main/use-cases/base-notification.use-case';
 import { CartItem } from '../../domain/cart-item.entity';
 import { CartItemRepository } from '../../infrastructure/cart-item.repository';
-import { ProductsRepository } from '../../../../../../catalog/src/modules/products/infrastructure/products.repository';
-import { NotificationCode } from '../../../../../../../libs/common/src/configuration/notificationCode';
-import { NotificationException } from '../../../../../../../libs/common/src/validators/result-notification';
+import { ProductsRepository } from '@catalog/modules/products/infrastructure/products.repository';
+import { NotificationCode } from '@common/configuration/notificationCode';
+import { NotificationException } from '@common/validators/result-notification';
 import { UpdateCartDto } from '../../api/dtos/request/update-cart.dto';
 
 export class UpdateProductInCartCommand {

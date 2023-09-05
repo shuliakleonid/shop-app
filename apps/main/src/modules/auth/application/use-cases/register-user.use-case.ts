@@ -3,9 +3,9 @@ import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { AuthService } from '../auth.service';
 import { CustomerEntity } from '../../../customers/domain/customer.entity';
 import { CustomerRepository } from '../../../customers/infrastructure/customer.repository';
-import { BaseNotificationUseCase } from '../../../../../../../libs/common/src/main/use-cases/base-notification.use-case';
-import { NotificationException } from '../../../../../../../libs/common/src/validators/result-notification';
-import { NotificationCode } from '../../../../../../../libs/common/src/configuration/notificationCode';
+import { BaseNotificationUseCase } from '@common/main/use-cases/base-notification.use-case';
+import { NotificationException } from '@common/validators/result-notification';
+import { NotificationCode } from '@common/configuration/notificationCode';
 
 export class RegisterUserCommand {
   constructor(public readonly userInputModel: RegisterInputDto) {}

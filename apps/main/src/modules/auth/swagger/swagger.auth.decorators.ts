@@ -1,7 +1,7 @@
 import { ApiBearerAuth, ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { applyDecorators, HttpStatus } from '@nestjs/common';
-import { ApiErrorResultDto } from '../../../../../../libs/common/src/validators/api-error-result.dto';
-import { TokenTypeSwaggerDto } from '../../../../../../libs/common/src/configuration/swagger/helpers/token-type-swagger.dto';
+import { ApiErrorResultDto } from '@common/validators/api-error-result.dto';
+import { TokenTypeSwaggerDto } from '@common/configuration/swagger/helpers/token-type-swagger.dto';
 import { MeViewDto } from '../api/dtos/response/me.dto';
 
 export function SwaggerDecoratorsByRegistration(): MethodDecorator {

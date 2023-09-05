@@ -1,6 +1,6 @@
 import { Body, Controller, Delete, HttpCode, HttpStatus, Param, ParseIntPipe, Post, Put } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
-import { ResultNotification } from '../../../../../../libs/common/src/validators/result-notification';
+import { ResultNotification } from '@common/validators/result-notification';
 import { CreateCategoryDto } from './dtos/request/create-category.dto';
 import { CreateCategoryCommand } from '../application/use-cases/create-category.use-case';
 import { UpdateCategoryDto } from './dtos/request/update-category.dto';

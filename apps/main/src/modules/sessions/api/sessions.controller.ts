@@ -5,7 +5,7 @@ import { SessionData } from '../../../decorators/session-data.decorator';
 import { SessionsQueryRepository } from '../infrastructure/sessions-query-repository';
 import { SessionDto } from '../application/dto/session.dto';
 import { DeleteSelectedSessionCommand } from '../application/use-cases/delete-selected-session-use.case';
-import { ResultNotification } from '../../../../../../libs/common/src/validators/result-notification';
+import { ResultNotification } from '@common/validators/result-notification';
 import { TerminateAllSessionsExceptCurrentCommand } from '../application/use-cases/terminate-all-sessions-except-current-use.case';
 import { DevicesViewModel } from './session.view.dto';
 import { RefreshTokenGuard } from '../../auth/api/guards/refresh-token.guard';

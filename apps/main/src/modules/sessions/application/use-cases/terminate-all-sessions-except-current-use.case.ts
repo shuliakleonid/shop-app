@@ -1,6 +1,6 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { SessionsService } from '../sessions.service';
-import { BaseNotificationUseCase } from '../../../../../../../libs/common/src/main/use-cases/base-notification.use-case';
+import { BaseNotificationUseCase } from '@common/main/use-cases/base-notification.use-case';
 import { SessionsRepository } from '../../infrastructure/sessions-repository';
 
 export class TerminateAllSessionsExceptCurrentCommand {

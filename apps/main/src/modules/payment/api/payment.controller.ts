@@ -1,7 +1,7 @@
 import { Body, Controller, Get, Post } from '@nestjs/common';
 import { Customer } from '@prisma/client';
-import { ResultNotification } from '../../../../../../libs/common/src/validators/result-notification';
-import { CurrentCustomerId } from '../../../../../../libs/common/src/decorators/user.decorator';
+import { ResultNotification } from '@common/validators/result-notification';
+import { CurrentCustomerId } from '@common/decorators/user.decorator';
 import { CreatePaymentOrderCommand } from '../application/use-cases/create-payment-order.use-case';
 import { CommandBus } from '@nestjs/cqrs';
 import { CreatePaymentOrderDto } from './dtos/request/create-payment-order.dto';

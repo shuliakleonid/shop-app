@@ -1,7 +1,7 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { TokensType } from '../types/types';
 import { AuthService } from '../auth.service';
-import { BaseNotificationUseCase } from '../../../../../../../libs/common/src/main/use-cases/base-notification.use-case';
+import { BaseNotificationUseCase } from '@common/main/use-cases/base-notification.use-case';
 
 export class LoginCommand {
   constructor(public readonly customerId: number, public readonly ip: string, public readonly deviceName: string) {}

@@ -1,7 +1,7 @@
 import { ExtractJwt, Strategy } from 'passport-jwt';
 import { PassportStrategy } from '@nestjs/passport';
 import { Injectable, UnauthorizedException } from '@nestjs/common';
-import { ApiConfigService } from '../../../../../../../libs/common/src/modules/api-config/api.config.service';
+import { ApiConfigService } from '@common/modules/api-config/api.config.service';
 import { SessionsRepository } from '../../../sessions/infrastructure/sessions-repository';
 
 @Injectable()

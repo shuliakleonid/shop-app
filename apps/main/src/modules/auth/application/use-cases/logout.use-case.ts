@@ -1,8 +1,8 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { SessionsRepository } from '../../../sessions/infrastructure/sessions-repository';
-import { BaseNotificationUseCase } from '../../../../../../../libs/common/src/main/use-cases/base-notification.use-case';
-import { NotificationException } from '../../../../../../../libs/common/src/validators/result-notification';
-import { NotificationCode } from '../../../../../../../libs/common/src/configuration/notificationCode';
+import { BaseNotificationUseCase } from '@common/main/use-cases/base-notification.use-case';
+import { NotificationException } from '@common/validators/result-notification';
+import { NotificationCode } from '@common/configuration/notificationCode';
 
 export class LogoutCommand {
   constructor(public userId: number, public deviceId: number) {}

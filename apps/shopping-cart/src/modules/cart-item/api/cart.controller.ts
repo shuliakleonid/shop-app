@@ -13,8 +13,8 @@ import {
 } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
 import { JwtAuthGuard } from '../../../../../main/src/modules/auth/api/guards/jwt-auth.guard';
-import { CurrentCustomerId } from '../../../../../../libs/common/src/decorators/user.decorator';
-import { ResultNotification } from '../../../../../../libs/common/src/validators/result-notification';
+import { CurrentCustomerId } from '@common/decorators/user.decorator';
+import { ResultNotification } from '@common/validators/result-notification';
 import { AddProductToCartDto } from './dtos/request/add-product-to-cart.dto';
 import { AddProductToCartCommand } from '../application/use-cases/add-product-to-cart.use-case';
 import { UpdateCartDto } from './dtos/request/update-cart.dto';

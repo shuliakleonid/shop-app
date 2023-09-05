@@ -1,5 +1,5 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
-import { BaseNotificationUseCase } from '../../../../../../../libs/common/src/main/use-cases/base-notification.use-case';
+import { BaseNotificationUseCase } from '@common/main/use-cases/base-notification.use-case';
 import { OrdersRepository } from '../../infrastructure/orders.repository';
 
 export class DeleteOrderCommand {

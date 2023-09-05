@@ -1,6 +1,6 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { Stripe } from 'stripe';
-import { ApiConfigService } from '../../../../../../libs/common/src/modules/api-config/api.config.service';
+import { ApiConfigService } from '@common/modules/api-config/api.config.service';
 import { EventEmitter2 } from '@nestjs/event-emitter';
 import { PaymentEventType } from '../type/payment-event.type';
 

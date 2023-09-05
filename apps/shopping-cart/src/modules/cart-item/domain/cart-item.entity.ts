@@ -1,15 +1,4 @@
-import {
-  Column,
-  CreateDateColumn,
-  Entity,
-  JoinColumn,
-  ManyToOne,
-  OneToOne,
-  PrimaryGeneratedColumn,
-  UpdateDateColumn,
-} from 'typeorm';
-import { OrderDetails } from '../../../../../orders/src/modules/orders/domain/order-details.entity';
-import { Product } from '../../../../../catalog/src/modules/products/domain/product.entity';
+import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 
 @Entity()
 export class CartItem {

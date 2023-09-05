@@ -1,5 +1,5 @@
 import { Customer } from '@prisma/client';
-import { BaseDateEntity } from '../../../../../../libs/common/src/entities/base-date.entity';
+import { BaseDateEntity } from '@common/entities/base-date.entity';
 
 export const customerFieldParameters = {
   userNameLength: {

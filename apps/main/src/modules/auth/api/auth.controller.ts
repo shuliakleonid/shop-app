@@ -10,8 +10,8 @@ import {
 } from '../swagger/swagger.auth.decorators';
 import { RegisterInputDto } from './dtos/request/register.dto';
 import { RegisterUserCommand } from '../application/use-cases/register-user.use-case';
-import { ResultNotification } from '../../../../../../libs/common/src/validators/result-notification';
-import { CurrentCustomerId } from '../../../../../../libs/common/src/decorators/user.decorator';
+import { ResultNotification } from '@common/validators/result-notification';
+import { CurrentCustomerId } from '@common/decorators/user.decorator';
 import { TokensType } from '../application/types/types';
 import { LoginCommand } from '../application/use-cases/login.use-case';
 import { LoginInputDto } from './dtos/request/login.dto';

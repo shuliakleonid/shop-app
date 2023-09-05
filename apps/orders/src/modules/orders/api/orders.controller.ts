@@ -1,11 +1,11 @@
 import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, ParseIntPipe, Post, Put } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
-import { ResultNotification } from '../../../../../../libs/common/src/validators/result-notification';
+import { ResultNotification } from '@common/validators/result-notification';
 import { CreateOrderDto } from './dtos/request/create-order.dto';
 import { CreateOrderCommand } from '../application/use-cases/create-order.use-case';
 import { UpdateOrderDto } from './dtos/request/update-order.dto';
 
-import { CurrentCustomerId } from '../../../../../../libs/common/src/decorators/user.decorator';
+import { CurrentCustomerId } from '@common/decorators/user.decorator';
 import { UpdateOrderCommand } from '../application/use-cases/update-order.use-case';
 import { DeleteOrderCommand } from '../application/use-cases/delete-order.use-case';
 import { OrdersQueryRepository } from '../infrastructure/orders.query-repository';

@@ -17,6 +17,32 @@
     "strictBindCallApply": false,
     "forceConsistentCasingInFileNames": false,
     "noFallthroughCasesInSwitch": false,
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "paths": {
+      "@common": [
+        "libs/common/src"
+      ],
+      "@common/*": [
+        "libs/common/src/*"
+      ],
+      "@catalog": [
+        "apps/catalog/src"
+      ],
+      "@catalog/*": [
+        "apps/catalog/src/*"
+      ],
+      "@orders": [
+        "apps/orders/src"
+      ],
+      "@orders/*": [
+        "apps/orders/src/*"
+      ],
+      "@shopping-cart": [
+        "apps/shopping-cart/src"
+      ],
+      "@shopping-cart/*": [
+        "apps/shopping-cart/src/*"
+      ],
+    }
    }
 }

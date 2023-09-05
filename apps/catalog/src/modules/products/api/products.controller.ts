@@ -1,6 +1,6 @@
 import { Body, Controller, Delete, HttpCode, HttpStatus, Param, ParseIntPipe, Post, Put } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
-import { ResultNotification } from '../../../../../../libs/common/src/validators/result-notification';
+import { ResultNotification } from '@common/validators/result-notification';
 import { CreateProductDto } from './dtos/request/create-product.dto';
 import { CreateProductsCommand } from '../application/use-cases/create-products.use-case';
 import { UpdateProductDto } from './dtos/request/update-product.dto';

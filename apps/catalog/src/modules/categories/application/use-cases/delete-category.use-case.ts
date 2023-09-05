@@ -1,8 +1,8 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
-import { BaseNotificationUseCase } from '../../../../../../../libs/common/src/main/use-cases/base-notification.use-case';
+import { BaseNotificationUseCase } from '@common/main/use-cases/base-notification.use-case';
 import { CategoryRepository } from '../../infrastructure/category.repository';
-import { NotificationException } from '../../../../../../../libs/common/src/validators/result-notification';
-import { NotificationCode } from '../../../../../../../libs/common/src/configuration/notificationCode';
+import { NotificationException } from '@common/validators/result-notification';
+import { NotificationCode } from '@common/configuration/notificationCode';
 import { Category } from '../../domain/category.entity';
 
 export class DeleteCategoryCommand {

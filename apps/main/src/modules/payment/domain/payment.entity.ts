@@ -1,4 +1,4 @@
-import { BaseDateEntity } from '../../../../../../libs/common/src/entities/base-date.entity';
+import { BaseDateEntity } from '@common/entities/base-date.entity';
 import { Payment, PaymentStatus } from '@prisma/client';
 
 export class PaymentEntity extends BaseDateEntity implements Payment {
@@ -8,7 +8,6 @@ export class PaymentEntity extends BaseDateEntity implements Payment {
   customerId: number;
   provider: string;
   status: PaymentStatus;
-
 
   static initCreatePayment(payment: any): any {
     const instancePayment = new PaymentEntity();

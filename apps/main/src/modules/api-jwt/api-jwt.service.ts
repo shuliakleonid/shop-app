@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { AccessTokenDataType, TokensType } from '../auth/application/types/types';
 import { SessionDto } from '../sessions/application/dto/session.dto';
-import { ApiConfigService } from '../../../../../libs/common/src/modules/api-config/api.config.service';
+import { ApiConfigService } from '@common/modules/api-config/api.config.service';
 
 @Injectable()
 export class ApiJwtService {

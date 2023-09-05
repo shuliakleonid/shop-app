@@ -1,6 +1,6 @@
 import { CreateProductDto } from '../../api/dtos/request/create-product.dto';
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
-import { BaseNotificationUseCase } from '../../../../../../../libs/common/src/main/use-cases/base-notification.use-case';
+import { BaseNotificationUseCase } from '@common/main/use-cases/base-notification.use-case';
 import { Product } from '../../domain/product.entity';
 import { ProductsRepository } from '../../infrastructure/products.repository';
 

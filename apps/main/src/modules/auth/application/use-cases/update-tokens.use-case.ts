@@ -1,7 +1,7 @@
 import { TokensType } from '../types/types';
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { SessionExtendedDto } from '../../../sessions/application/dto/session-extended.dto';
-import { BaseNotificationUseCase } from '../../../../../../../libs/common/src/main/use-cases/base-notification.use-case';
+import { BaseNotificationUseCase } from '@common/main/use-cases/base-notification.use-case';
 import { ApiJwtService } from '../../../api-jwt/api-jwt.service';
 import { SessionsRepository } from '../../../sessions/infrastructure/sessions-repository';
 import { GenerateNewTokensDto } from '../../api/dtos/request/generate-new-token';

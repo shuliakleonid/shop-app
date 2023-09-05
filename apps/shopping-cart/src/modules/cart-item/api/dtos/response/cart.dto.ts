@@ -1,7 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsNumber } from 'class-validator';
 import { CartItem } from '../../../domain/cart-item.entity';
-import { Product } from '../../../../../../../catalog/src/modules/products/domain/product.entity';
 
 export class CartItemDto {
   @ApiProperty()
