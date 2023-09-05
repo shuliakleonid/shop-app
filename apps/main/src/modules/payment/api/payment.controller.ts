@@ -16,7 +16,7 @@ export class PaymentStripeController {
     const notification = await this.commandBus.execute<CreatePaymentOrderCommand, ResultNotification<string>>(
       new CreatePaymentOrderCommand(customerId, paymentOrder),
     );
-    // return new PaymentOrderUrlViewModel(notification.getData());
+    return notification.getData();
   }
 
   @Get('order')

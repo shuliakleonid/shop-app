@@ -12,7 +12,7 @@ export class CreatePaymentOrderCommand {
 
 @CommandHandler(CreatePaymentOrderCommand)
 export class CreatePaymentOrderUseCase
-  extends BaseNotificationUseCase<CreatePaymentOrderCommand, void>
+  extends BaseNotificationUseCase<CreatePaymentOrderCommand, { url: string }>
   implements ICommandHandler<CreatePaymentOrderCommand>
 {
   constructor(
@@ -21,7 +21,7 @@ export class CreatePaymentOrderUseCase
   ) {
     super();
   }
-  async executeUseCase(command: CreatePaymentOrderCommand): Promise<void> {
+  async executeUseCase(command: CreatePaymentOrderCommand) {
     const { customerId, paymentOrder } = command;
     // const order = await this.validateOrder(paymentOrder.orderId, customerId);
 
@@ -31,13 +31,15 @@ export class CreatePaymentOrderUseCase
     //   orderId: order.id,
     // });
 
-    await this.paymentStripeService.createPaymentSession({
+    const { url } = await this.paymentStripeService.createPaymentSession({
       customerId: 1,
       // email: 'XXXXXXXXXXXXX',
       // userName: 'XXXXXXXXXXXXX',
       totalAmount: 1000,
       orderId: 12,
     });
+
+    return { url };
   }
 
   async validateOrder(orderId: number, customerId: number) {
