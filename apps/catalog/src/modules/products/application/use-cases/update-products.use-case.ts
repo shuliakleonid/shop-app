@@ -1,4 +1,3 @@
-import { UpdateProductDto } from '../../api/dtos/request/Update-product.dto';
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { BaseNotificationUseCase } from '@common/main/use-cases/base-notification.use-case';
 import { Product } from '../../domain/product.entity';
@@ -7,7 +6,14 @@ import { NotificationException } from '@common/validators/result-notification';
 import { NotificationCode } from '@common/configuration/notificationCode';
 
 export class UpdateProductsCommand {
-  constructor(public readonly dto: UpdateProductDto & { id: number }) {}
+  constructor(
+    public readonly dto: {
+      name: string;
+      price: number;
+      description: string;
+      quantity: number;
+    } & { id: number },
+  ) {}
 }
 
 @CommandHandler(UpdateProductsCommand)

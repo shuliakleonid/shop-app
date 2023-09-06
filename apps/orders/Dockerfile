@@ -11,9 +11,8 @@ COPY . .
 
 RUN yarn remove bcrypt
 RUN yarn add bcrypt
-RUN yarn build orders
 RUN yarn prisma generate --schema=prisma/schema.prisma
 
-#EXPOSE 5001
+RUN yarn build orders
 
 CMD sh -c "node ./dist/apps/orders/main"

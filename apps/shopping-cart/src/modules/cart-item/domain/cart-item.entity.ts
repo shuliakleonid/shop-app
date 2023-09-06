@@ -14,17 +14,12 @@ export class CartItem {
   @UpdateDateColumn({ type: 'timestamp' })
   updateDate: Date;
 
-  // @ManyToOne(() => OrderDetails, OrderDetails => OrderDetails)
-  // @JoinColumn({ name: 'id' })
-  // orderDetails: OrderDetails;
   @Column()
   orderId: number;
 
   @Column()
   customerId: number;
 
-  // @OneToOne(() => Product)
-  // @JoinColumn({ name: 'productId' })
   @Column()
   productId: number;
 
