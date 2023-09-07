@@ -6,9 +6,10 @@ import { PrismaModule } from '@common/modules/prisma/prisma.module';
 import { PaymentsModule } from './modules/payment-stripe/payments.module';
 import { PaymentModule } from './modules/payment/payment.module';
 import { EventEmitterModule } from '@nestjs/event-emitter';
+import { KafkaModule } from '@common/modules/kafka/kafka.module';
 
 @Module({
-  imports: [AuthModule, PrismaModule, PaymentsModule, PaymentModule, EventEmitterModule.forRoot()],
+  imports: [AuthModule, PrismaModule, PaymentsModule, PaymentModule, KafkaModule, EventEmitterModule.forRoot()],
   controllers: [AppController],
   providers: [AppService],
 })
