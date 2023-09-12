@@ -3,13 +3,14 @@ import { Stripe } from 'stripe';
 import { ApiConfigService } from '@common/modules/api-config/api.config.service';
 import { EventEmitter2 } from '@nestjs/event-emitter';
 import { PaymentEventType } from '../type/payment-event.type';
+import { ProducerService } from '@common/modules/kafka/producer.service';
 
 @Injectable()
 export class StripePaymentWebhookService {
   private stripe = new Stripe(this.configService.API_KEY_STRIPE, { apiVersion: '2023-08-16' });
   private secretHook = this.configService.SECRET_HOOK_STRIPE;
 
-  constructor(private readonly configService: ApiConfigService, private readonly eventEmitter: EventEmitter2) {}
+  constructor(private readonly configService: ApiConfigService, private readonly eventEmitter: EventEmitter2,private readonly _kafka: ProducerService) {}
 
   async createEventSession(signature: string | string[], body: Buffer) {
     let data;
@@ -24,7 +25,11 @@ export class StripePaymentWebhookService {
       switch (eventType) {
         case 'checkout.session.completed':
           console.log('-> data', data);
-          this.eventEmitter.emit(PaymentEventType.successPayment, data);
+          await this._kafka.produce({
+            topic: 'login',
+            messages: [{ value: `We pay  ${JSON.stringify(data)} ` }],
+          });
+          // this.eventEmitter.emit(PaymentEventType.successPayment, data);
           break;
         case 'invoice.paid':
           break;

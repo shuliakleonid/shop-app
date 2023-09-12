@@ -2,9 +2,10 @@ import { MiddlewareConsumer, Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { OrdersModule } from './modules/orders/orders.module';
+import { KafkaModule } from '@common/modules/kafka/kafka.module';
 
 @Module({
-  imports: [OrdersModule],
+  imports: [OrdersModule, KafkaModule],
   controllers: [AppController],
   providers: [AppService],
 })

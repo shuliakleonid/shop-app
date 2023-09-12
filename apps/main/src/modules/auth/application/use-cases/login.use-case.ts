@@ -19,10 +19,10 @@ export class LoginUseCase
 
   async executeUseCase(command: LoginCommand): Promise<TokensType> {
     const token = await this.authService.loginUser(command);
-    console.log('-> token', token);
     await this.create(command.customerId);
     return token;
   }
+
   async create(customerId: number) {
     console.log('create call');
     try {

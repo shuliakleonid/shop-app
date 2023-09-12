@@ -9,11 +9,12 @@ import { DatabaseModule } from '@common/modules/database/database.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { OrderDetails } from '@orders/modules/orders/domain/order-details.entity';
 import { StripePaymentWebhookService } from '../payment-stripe/application/stripe-payment-webhook.service';
+import { KafkaModule } from '@common/modules/kafka/kafka.module';
 
 const useCases = [CreatePaymentOrderUseCase];
 
 @Module({
-  imports: [ApiConfigModule, CqrsModule, DatabaseModule, TypeOrmModule.forFeature([OrderDetails])],
+  imports: [ApiConfigModule, CqrsModule, DatabaseModule, TypeOrmModule.forFeature([OrderDetails]), KafkaModule],
   controllers: [PaymentStripeController],
   providers: [PaymentStripeService, OrdersQueryRepository, StripePaymentWebhookService, ...useCases],
   exports: [],

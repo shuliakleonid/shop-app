@@ -14,7 +14,7 @@ import { LogoutUseCase } from './application/use-cases/logout.use-case';
 import { GenerateNewTokensUseCase } from './application/use-cases/update-tokens.use-case';
 import { CustomerQueryRepository } from '../customers/infrastructure/users.query-repository';
 import { KafkaModule } from '@common/modules/kafka/kafka.module';
-import { CreateConsumer } from './login.consumer';
+import { LoginConsumer } from './login.consumer';
 
 const useCases = [RegisterUserUseCase, LoginUseCase, LogoutUseCase, GenerateNewTokensUseCase];
 const strategies = [LocalStrategy, JwtStrategy];
@@ -22,7 +22,7 @@ const strategies = [LocalStrategy, JwtStrategy];
 @Module({
   imports: [CqrsModule, KafkaModule, ApiConfigModule, CustomersModule, ApiJwtModule],
   controllers: [AuthController],
-  providers: [AuthService, SessionsRepository, CustomerQueryRepository, CreateConsumer, ...useCases, ...strategies],
+  providers: [AuthService, SessionsRepository, CustomerQueryRepository, LoginConsumer, ...useCases, ...strategies],
   exports: [AuthService],
 })
 export class AuthModule {}

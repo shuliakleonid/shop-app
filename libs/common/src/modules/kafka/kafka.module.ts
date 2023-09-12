@@ -1,7 +1,8 @@
 import { ProducerService } from './producer.service';
 import { ConsumerService } from './consumer.service';
-import { Module } from '@nestjs/common';
+import { Global, Module } from '@nestjs/common';
 
+@Global()
 @Module({
   providers: [ProducerService, ConsumerService],
   exports: [ProducerService, ConsumerService],
