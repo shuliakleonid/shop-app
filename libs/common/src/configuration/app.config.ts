@@ -6,9 +6,7 @@ import cookieParser from 'cookie-parser';
 export const appConfig = (app: INestApplication) => {
   baseAppConfig(app);
   app.enableCors({
-    origin: [
-      // 'http://localhost:3000',
-    ],
+    origin: [],
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   });
@@ -16,10 +14,7 @@ export const appConfig = (app: INestApplication) => {
 };
 
 export const baseAppConfig = (app: INestApplication) => {
-  //pipe validation
   pipeSetup(app);
-  //exception filter
   exceptionFilterSetup(app);
-  //add work with cookies
   app.use(cookieParser());
 };

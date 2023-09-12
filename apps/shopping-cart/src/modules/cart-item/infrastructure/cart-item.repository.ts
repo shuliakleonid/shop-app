@@ -20,7 +20,7 @@ export class CartItemRepository {
   }
 
   async findOneByProduct(productId: number, customerId: number) {
-    // return await this.cartItemRepository.findOneBy({ product, customerId });
+    return await this.cartItemRepository.findOneBy({ product, customerId });
     return null;
   }
 }

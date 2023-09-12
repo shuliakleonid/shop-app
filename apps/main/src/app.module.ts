@@ -7,9 +7,19 @@ import { PaymentsModule } from './modules/payment-stripe/payments.module';
 import { PaymentModule } from './modules/payment/payment.module';
 import { EventEmitterModule } from '@nestjs/event-emitter';
 import { KafkaModule } from '@common/modules/kafka/kafka.module';
+import mainConfig from '@common/modules/api-config/main.config';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
-  imports: [AuthModule, PrismaModule, PaymentsModule, PaymentModule, KafkaModule, EventEmitterModule.forRoot()],
+  imports: [
+    ConfigModule.forRoot({ load: [mainConfig] }),
+    AuthModule,
+    PrismaModule,
+    PaymentsModule,
+    PaymentModule,
+    KafkaModule,
+    EventEmitterModule.forRoot(),
+  ],
   controllers: [AppController],
   providers: [AppService],
 })

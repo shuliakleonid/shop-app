@@ -1,7 +1,7 @@
 import { Controller, Delete, Get, HttpCode, HttpStatus, Param, UseGuards } from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { CommandBus } from '@nestjs/cqrs';
-import { SessionData } from '../../../decorators/session-data.decorator';
+import { SessionData } from '@main/decorators/session-data.decorator';
 import { SessionsQueryRepository } from '../infrastructure/sessions-query-repository';
 import { SessionDto } from '../application/dto/session.dto';
 import { DeleteSelectedSessionCommand } from '../application/use-cases/delete-selected-session-use.case';
@@ -20,14 +20,14 @@ export class SessionsController {
     private readonly commandBus: CommandBus,
   ) {}
 
-  // @SwaggerDecoratorsByGetUserSessions()
+  @SwaggerDecoratorsByGetUserSessions()
   @Get()
   async getUserSessions(@SessionData() sessionData: SessionDto): Promise<DevicesViewModel> {
     const sessions = await this.sessionsQueryRepository.findSessionsByUserId(sessionData.customerId);
     return new DevicesViewModel(sessions, sessionData.deviceId);
   }
 
-  // @SwaggerDecoratorsByDeleteSelectedSession()
+  @SwaggerDecoratorsByDeleteSelectedSession()
   @HttpCode(HttpStatus.NO_CONTENT)
   @Delete(':deviceId')
   async deleteSelectedSession(
@@ -39,7 +39,7 @@ export class SessionsController {
     );
   }
 
-  // @SwaggerDecoratorsByDeleteAllSessionsExceptCurrent()
+  @SwaggerDecoratorsByDeleteAllSessionsExceptCurrent()
   @Delete()
   @HttpCode(HttpStatus.NO_CONTENT)
   async terminateAllSessionsExceptCurrent(@SessionData() sessionData: SessionDto): Promise<void> {

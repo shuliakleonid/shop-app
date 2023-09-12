@@ -1,6 +1,7 @@
-import { Injectable, Logger } from '@nestjs/common';
+import { Inject, Injectable, Logger } from '@nestjs/common';
 import { Stripe } from 'stripe';
-import { ApiConfigService } from '@common/modules/api-config/api.config.service';
+import stripeConfig from '@common/modules/api-config/stripe.config';
+import { ConfigType } from '@nestjs/config';
 
 @Injectable()
 export class PaymentStripeService {
@@ -9,22 +10,12 @@ export class PaymentStripeService {
   serverUrl: string;
   currency = 'usd';
 
-  constructor(private readonly configService: ApiConfigService) {
+  constructor(@Inject(stripeConfig.KEY) private configService: ConfigType<typeof stripeConfig>) {
     this.serverUrl = this.configService.TEST_CLIENT_URL;
     this.currency = this.configService.STRIPE_CURRENCY;
   }
 
-  // public async createCustomer(name: string, email: string) {
-  //   return this.stripe.customers.create({ name, email });
-  // }
-
-  async createPaymentSession(params: {
-    customerId: number;
-    // email: string;
-    // userName: string;
-    totalAmount: number;
-    orderId: number;
-  }) {
+  async createPaymentSession(params: { customerId: number; totalAmount: number; orderId: number }) {
     const defaultParams = {
       mode: 'payment',
       payment_method_types: ['card'],
@@ -48,10 +39,6 @@ export class PaymentStripeService {
       metadata: { orderId: params.orderId },
     } as unknown as Stripe.Checkout.SessionCreateParams;
 
-    // if (!params.customerId) {
-    //   const customer = await this.createCustomer(params.userName, params.email);
-    //   defaultParams['customer'] = customer.id;
-    // }
     try {
       const session = await this.stripe.checkout.sessions.create(defaultParams);
       console.log('-> session', session);

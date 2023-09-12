@@ -6,7 +6,7 @@ import { CartItem } from './domain/cart-item.entity';
 import { CartController } from './api/cart.controller';
 import { CartItemRepository } from './infrastructure/cart-item.repository';
 import { AddProductToCartUseCase } from './application/use-cases/add-product-to-cart.use-case';
-import { AuthModule } from '../../../../main/src/modules/auth/auth.module';
+import { AuthModule } from '@main/modules/auth/auth.module';
 import { ProductsRepository } from '@catalog/modules/products/infrastructure/products.repository';
 import { Product } from '@catalog/modules/products/domain/product.entity';
 import { Category } from '@catalog/modules/categories/domain/category.entity';

@@ -1,21 +1,22 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { ApiConfigModule } from '../api-config/api.config.module';
-import { ApiConfigService } from '../api-config/api.config.service';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import databaseConfig from '@common/modules/api-config/database.config';
 
 @Module({
   imports: [
+    ConfigModule.forRoot({
+      load: [databaseConfig],
+    }),
     TypeOrmModule.forRootAsync({
-      imports: [ApiConfigModule],
-      inject: [ApiConfigService],
-      useFactory: (configService: ApiConfigService) => {
-        const url = configService.DATABASE_URL;
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: (configService: ConfigService) => {
+        const url = configService.get<string>('database.DATABASE_URL', { infer: true });
         const regex = /localhost/;
         const isSsl = !regex.test(url);
         return {
           autoLoadEntities: true,
-          // logger: new DatabaseLogger(),
-          // entities: [...entities],
           synchronize: true,
           type: 'postgres',
           url: url,

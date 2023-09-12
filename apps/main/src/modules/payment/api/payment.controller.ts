@@ -21,6 +21,5 @@ export class PaymentStripeController {
 
   @Get('order')
   async getOrders(@CurrentCustomerId() customerId: Customer) {
-    // return this.paymentOrderQueryRepository.getCustomersOrders(customerId);
   }
 }

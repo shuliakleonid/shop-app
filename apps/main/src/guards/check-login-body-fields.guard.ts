@@ -17,7 +17,6 @@ export class CheckLoginBodyFieldsGuard implements CanActivate {
     });
 
     if (res.length > 0) throw new BadRequestException(err);
-    // throw new BadRequestException([{ message: 'bad email or password', field: 'login, email or password' }]);
 
     return true;
   }

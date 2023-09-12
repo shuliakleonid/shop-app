@@ -19,7 +19,6 @@ export class CreateProductsUseCase
 
   async executeUseCase(command: CreateProductsCommand): Promise<void> {
     const { name, price, description, categoryId } = command.dto;
-    // мы должны проверить если категорияё
 
     const productEntity = Product.create({ name, description, price });
     await this.productsRepository.save(productEntity);

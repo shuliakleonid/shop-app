@@ -18,7 +18,5 @@ export class OrdersQueryRepository {
     return this.orderRepository.findOneBy({ id: orderId, customerId });
   }
 
-  async findAllProductsInOrder(orderId: number) {
-    // return this.orderRepository.({ id: orderId });
-  }
+  async findAllProductsInOrder(orderId: number) {}
 }

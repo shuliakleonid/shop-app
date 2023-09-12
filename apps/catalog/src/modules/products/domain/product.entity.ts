@@ -23,10 +23,6 @@ export class Product {
   @UpdateDateColumn({ type: 'timestamp' })
   updateDate: Date;
 
-  // @ManyToOne(() => Category, category => category.products)
-  // @JoinTable()
-  // category: Category;
-
   @Column({ nullable: true })
   categoryId: number;
 

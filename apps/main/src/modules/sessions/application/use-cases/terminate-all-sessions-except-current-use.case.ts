@@ -21,9 +21,7 @@ export class TerminateAllSessionsExceptCurrentUseCase
 
   async executeUseCase(command: TerminateAllSessionsExceptCurrentCommand): Promise<void> {
     const { userId, deviceId } = command;
-    //find current session
     await this.sessionsService.findSessionByDeviceId(deviceId, userId);
-    //remove all sessions except current where userId = userId and deviceId != deviceId
     await this.sessionsRepository.deleteAllSessionsExceptCurrent(deviceId, userId);
   }
 }

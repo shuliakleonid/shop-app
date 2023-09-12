@@ -25,19 +25,16 @@ export class CreatePaymentOrderUseCase
   async executeUseCase(command: CreatePaymentOrderCommand) {
     const { customerId, paymentOrder } = command;
     const order = await this.validateOrder(paymentOrder.orderId, customerId);
-    //cartItemId
-    // const allProductsInOrder = await this.cartItemQueryRepository.findAllProductsInOrder(order.id);
+    const allProductsInOrder = await this.cartItemQueryRepository.findAllProductsInOrder(order.id);
 
-    // await this.paymentStripeService.createPaymentSession({
-    //   customerId,
-    //   orderDetails: order,
-    //   productsInOrder: order,
-    // });
+    await this.paymentStripeService.createPaymentSession({
+      customerId,
+      orderDetails: order,
+      productsInOrder: order,
+    });
 
     const { url } = await this.paymentStripeService.createPaymentSession({
       customerId: 1,
-      // email: 'XXXXXXXXXXXXX',
-      // userName: 'XXXXXXXXXXXXX',
       totalAmount: 1000,
       orderId: 12,
     });

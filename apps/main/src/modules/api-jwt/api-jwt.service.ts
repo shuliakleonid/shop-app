@@ -1,17 +1,21 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { AccessTokenDataType, TokensType } from '../auth/application/types/types';
 import { SessionDto } from '../sessions/application/dto/session.dto';
-import { ApiConfigService } from '@common/modules/api-config/api.config.service';
+import { ConfigType } from '@nestjs/config';
+import jwtConfig from '@common/modules/api-config/jwt.config';
 
 @Injectable()
 export class ApiJwtService {
-  constructor(private jwtService: JwtService, private apiConfigService: ApiConfigService) {}
+  constructor(
+    private jwtService: JwtService,
+    @Inject(jwtConfig.KEY) private jwtTokenConfig: ConfigType<typeof jwtConfig>,
+  ) {}
 
   async createJWT(customerId: number, deviceId: number): Promise<TokensType> {
-    const secretRT = this.apiConfigService.REFRESH_TOKEN_SECRET;
-    const expiresInRT = this.apiConfigService.EXPIRED_REFRESH;
-    const expiresInAc = this.apiConfigService.EXPIRED_ACCESS;
+    const secretRT = this.jwtTokenConfig.REFRESH_TOKEN_SECRET;
+    const expiresInRT = this.jwtTokenConfig.EXPIRED_REFRESH;
+    const expiresInAc = this.jwtTokenConfig.EXPIRED_ACCESS;
 
     const accessToken = this.jwtService.sign({ customerId, deviceId }, { expiresIn: expiresInAc });
     const refreshToken = this.jwtService.sign({ customerId, deviceId }, { secret: secretRT, expiresIn: expiresInRT });
@@ -21,7 +25,7 @@ export class ApiJwtService {
 
   async getRefreshTokenData(refreshToken: string): Promise<SessionDto | null> {
     try {
-      const secretRT = this.apiConfigService.REFRESH_TOKEN_SECRET;
+      const secretRT = this.jwtTokenConfig.REFRESH_TOKEN_SECRET;
       return this.jwtService.verify(refreshToken, { secret: secretRT }) as SessionDto;
     } catch (e) {
       return null;
@@ -30,7 +34,7 @@ export class ApiJwtService {
 
   async getUserIdByAccessToken(accessToken: string): Promise<number | null> {
     try {
-      const secretRT = this.apiConfigService.ACCESS_TOKEN_SECRET;
+      const secretRT = this.jwtTokenConfig.ACCESS_TOKEN_SECRET;
       const result = this.jwtService.verify(accessToken, { secret: secretRT }) as AccessTokenDataType;
       return result.userId;
     } catch (e) {

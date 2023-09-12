@@ -12,7 +12,7 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
-import { JwtAuthGuard } from '../../../../../main/src/modules/auth/api/guards/jwt-auth.guard';
+import { JwtAuthGuard } from '@main/modules/auth/api/guards/jwt-auth.guard';
 import { CurrentCustomerId } from '@common/decorators/user.decorator';
 import { ResultNotification } from '@common/validators/result-notification';
 import { AddProductToCartDto } from './dtos/request/add-product-to-cart.dto';

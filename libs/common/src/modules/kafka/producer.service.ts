@@ -11,7 +11,6 @@ export class ProducerService implements OnModuleInit, OnApplicationShutdown {
   }
 
   private readonly kafka = new Kafka({
-    // clientId: 'producer',
     brokers: ['localhost:9092'],
   });
 

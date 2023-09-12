@@ -19,6 +19,12 @@
     "noFallthroughCasesInSwitch": false,
     "esModuleInterop": true,
     "paths": {
+      "@main": [
+        "apps/main/src"
+      ],
+      "@main/*": [
+        "apps/main/src/*"
+      ],
       "@common": [
         "libs/common/src"
       ],
@@ -42,7 +48,7 @@
       ],
       "@shopping-cart/*": [
         "apps/shopping-cart/src/*"
-      ],
+      ]
     }
-   }
+  }
 }

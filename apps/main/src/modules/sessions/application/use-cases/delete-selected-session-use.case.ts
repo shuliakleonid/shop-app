@@ -32,11 +32,8 @@ export class DeleteSelectedSessionUseCase
    */
   async executeUseCase(command: DeleteSelectedSessionCommand): Promise<void> {
     const { userId, deviceIdForDelete, deviceId } = command;
-    //finding device by id from uri params
     await this.sessionsService.findSessionByDeviceId(deviceIdForDelete, userId);
-    //find current session
     await this.sessionsService.findSessionByDeviceId(deviceId, userId);
-    //delete session by id
     await this.sessionsRepository.deleteSessionByDeviceId(deviceIdForDelete);
   }
 }

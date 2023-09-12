@@ -15,12 +15,24 @@ import { GenerateNewTokensUseCase } from './application/use-cases/update-tokens.
 import { CustomerQueryRepository } from '../customers/infrastructure/users.query-repository';
 import { KafkaModule } from '@common/modules/kafka/kafka.module';
 import { LoginConsumer } from './login.consumer';
+import { ConfigModule } from '@nestjs/config';
+import jwtConfig from '@common/modules/api-config/jwt.config';
 
 const useCases = [RegisterUserUseCase, LoginUseCase, LogoutUseCase, GenerateNewTokensUseCase];
 const strategies = [LocalStrategy, JwtStrategy];
 
 @Module({
-  imports: [CqrsModule, KafkaModule, ApiConfigModule, CustomersModule, ApiJwtModule],
+  imports: [
+    ConfigModule.forRoot({
+      load: [jwtConfig],
+    }),
+
+    CqrsModule,
+    KafkaModule,
+    ApiConfigModule,
+    CustomersModule,
+    ApiJwtModule,
+  ],
   controllers: [AuthController],
   providers: [AuthService, SessionsRepository, CustomerQueryRepository, LoginConsumer, ...useCases, ...strategies],
   exports: [AuthService],

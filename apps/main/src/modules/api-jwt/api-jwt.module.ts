@@ -1,22 +1,24 @@
 import { Module } from '@nestjs/common';
 import { ApiJwtService } from './api-jwt.service';
 import { JwtModule } from '@nestjs/jwt';
-import { ApiConfigModule } from '@common/modules/api-config/api.config.module';
-import { ApiConfigService } from '@common/modules/api-config/api.config.service';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import jwtConfig from '@common/modules/api-config/jwt.config';
 
 @Module({
   imports: [
+    ConfigModule.forRoot({
+      load: [jwtConfig],
+    }),
     JwtModule.registerAsync({
-      imports: [ApiConfigModule],
-      inject: [ApiConfigService],
-      useFactory: (apiConfigService: ApiConfigService) => {
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: (configService: ConfigService) => {
         return {
-          secret: apiConfigService.ACCESS_TOKEN_SECRET,
-          signOptions: { expiresIn: apiConfigService.EXPIRED_ACCESS },
+          secret: configService.get('jwt.ACCESS_TOKEN_SECRET', { infer: true }),
+          signOptions: { expiresIn: configService.get('jwt.EXPIRED_ACCESS', { infer: true }) },
         };
       },
     }),
-    ApiConfigModule,
   ],
   providers: [ApiJwtService],
   exports: [ApiJwtService],
