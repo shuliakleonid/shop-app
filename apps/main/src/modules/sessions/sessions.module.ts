@@ -3,10 +3,10 @@ import { CqrsModule } from '@nestjs/cqrs';
 import { SessionsController } from './api/sessions.controller';
 import { ApiJwtModule } from '../api-jwt/api-jwt.module';
 import { SessionsService } from './application/sessions.service';
-import { TerminateAllSessionsExceptCurrentUseCase } from './application/use-cases/terminate-all-sessions-except-current-use.case';
-import { DeleteSelectedSessionUseCase } from './application/use-cases/delete-selected-session-use.case';
+import { TerminateAllSessionsExceptCurrentHandler } from './application/use-cases/terminate-all-sessions-except-current.handler';
+import { DeleteSelectedSessionHandler } from './application/use-cases/delete-selected-session.handler';
 
-const useCases = [DeleteSelectedSessionUseCase, TerminateAllSessionsExceptCurrentUseCase];
+const useCases = [DeleteSelectedSessionHandler, TerminateAllSessionsExceptCurrentHandler];
 
 @Module({
   imports: [CqrsModule, ApiJwtModule],

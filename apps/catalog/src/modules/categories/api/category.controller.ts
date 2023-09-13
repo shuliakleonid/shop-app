@@ -2,10 +2,10 @@ import { Body, Controller, Delete, HttpCode, HttpStatus, Param, ParseIntPipe, Po
 import { CommandBus } from '@nestjs/cqrs';
 import { ResultNotification } from '@common/validators/result-notification';
 import { CreateCategoryDto } from './dtos/request/create-category.dto';
-import { CreateCategoryCommand } from '../application/use-cases/create-category.use-case';
+import { CreateCategoryCommand } from '../application/use-cases/create-category.handler';
 import { UpdateCategoryDto } from './dtos/request/update-category.dto';
-import { UpdateCategoryCommand } from '../application/use-cases/update-category.use-case';
-import { DeleteCategoryCommand } from '../application/use-cases/delete-category.use-case';
+import { UpdateCategoryCommand } from '../application/use-cases/update-category.handler';
+import { DeleteCategoryCommand } from '../application/use-cases/delete-category.handler';
 
 @Controller('category')
 export class CategoryController {

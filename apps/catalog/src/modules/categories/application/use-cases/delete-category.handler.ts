@@ -1,5 +1,5 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
-import { BaseNotificationUseCase } from '@common/main/use-cases/base-notification.use-case';
+import { BaseNotificationHandler } from '@common/main/use-cases/base-notification.use-case';
 import { CategoryRepository } from '../../infrastructure/category.repository';
 import { NotificationException } from '@common/validators/result-notification';
 import { NotificationCode } from '@common/configuration/notificationCode';
@@ -10,15 +10,15 @@ export class DeleteCategoryCommand {
 }
 
 @CommandHandler(DeleteCategoryCommand)
-export class DeleteCategoryUseCase
-  extends BaseNotificationUseCase<DeleteCategoryCommand, void>
+export class DeleteCategoryHandler
+  extends BaseNotificationHandler<DeleteCategoryCommand, void>
   implements ICommandHandler<DeleteCategoryCommand>
 {
   constructor(private readonly categoryRepository: CategoryRepository) {
     super();
   }
 
-  async executeUseCase(command: DeleteCategoryCommand): Promise<void> {
+  async executeHandler(command: DeleteCategoryCommand): Promise<void> {
     const { id } = command;
 
     const category = await this.validate(id);

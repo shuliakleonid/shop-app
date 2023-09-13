@@ -2,17 +2,17 @@ import { Logger } from '@nestjs/common';
 import { ResultNotification } from '../../validators/result-notification';
 import { NotificationErrors } from '../../validators/checker-notification.errors';
 
-export abstract class BaseNotificationUseCase<TCommand, TResult> {
-  private readonly logger = new Logger(BaseNotificationUseCase.name);
+export abstract class BaseNotificationHandler<TCommand, TResult> {
+  private readonly logger = new Logger(BaseNotificationHandler.name);
 
   async execute(command: TCommand): Promise<ResultNotification<TResult>> {
     const notification = new ResultNotification<TResult>();
     try {
-      const result = await this.executeUseCase(command);
+      const result = await this.executeHandler(command);
       if (result) notification.addData(result);
     } catch (e) {
       notification.addErrorFromNotificationException(e);
-      this.logger.log('BaseNotificationUseCase:', +JSON.stringify(command));
+      this.logger.log('BaseNotificationHandler:', +JSON.stringify(command));
       this.logger.error(JSON.stringify(e));
     }
 
@@ -21,5 +21,5 @@ export abstract class BaseNotificationUseCase<TCommand, TResult> {
     return notification;
   }
 
-  abstract executeUseCase(command: TCommand): Promise<TResult>;
+  abstract executeHandler(command: TCommand): Promise<TResult>;
 }

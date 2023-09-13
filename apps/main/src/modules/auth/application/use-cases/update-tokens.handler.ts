@@ -1,7 +1,7 @@
 import { TokensType } from '../types/types';
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { SessionExtendedDto } from '../../../sessions/application/dto/session-extended.dto';
-import { BaseNotificationUseCase } from '@common/main/use-cases/base-notification.use-case';
+import { BaseNotificationHandler } from '@common/main/use-cases/base-notification.use-case';
 import { ApiJwtService } from '../../../api-jwt/api-jwt.service';
 import { SessionsRepository } from '../../../sessions/infrastructure/sessions-repository';
 import { GenerateNewTokensDto } from '../../api/dtos/request/generate-new-token';
@@ -11,15 +11,15 @@ export class UpdateTokensCommand {
 }
 
 @CommandHandler(UpdateTokensCommand)
-export class GenerateNewTokensUseCase
-  extends BaseNotificationUseCase<UpdateTokensCommand, TokensType>
+export class GenerateNewTokensHandler
+  extends BaseNotificationHandler<UpdateTokensCommand, TokensType>
   implements ICommandHandler<UpdateTokensCommand>
 {
   constructor(protected apiJwtService: ApiJwtService, protected sessionsRepository: SessionsRepository) {
     super();
   }
 
-  async executeUseCase(command: UpdateTokensCommand): Promise<TokensType> {
+  async executeHandler(command: UpdateTokensCommand): Promise<TokensType> {
     const { deviceName, oldSessionData, ip } = command.dto;
 
     const tokens = await this.apiJwtService.createJWT(oldSessionData.customerId, oldSessionData.deviceId);

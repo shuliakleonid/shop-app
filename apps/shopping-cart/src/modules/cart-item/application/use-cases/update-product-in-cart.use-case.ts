@@ -1,5 +1,5 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
-import { BaseNotificationUseCase } from '@common/main/use-cases/base-notification.use-case';
+import { BaseNotificationHandler } from '@common/main/use-cases/base-notification.use-case';
 import { CartItem } from '../../domain/cart-item.entity';
 import { CartItemRepository } from '../../infrastructure/cart-item.repository';
 import { ProductsRepository } from '@catalog/modules/products/infrastructure/products.repository';
@@ -12,8 +12,8 @@ export class UpdateProductInCartCommand {
 }
 
 @CommandHandler(UpdateProductInCartCommand)
-export class UpdateProductInCartUseCase
-  extends BaseNotificationUseCase<UpdateProductInCartCommand, void>
+export class UpdateProductInCartHandler
+  extends BaseNotificationHandler<UpdateProductInCartCommand, void>
   implements ICommandHandler<UpdateProductInCartCommand>
 {
   constructor(
@@ -23,7 +23,7 @@ export class UpdateProductInCartUseCase
     super();
   }
 
-  async executeUseCase(command: UpdateProductInCartCommand): Promise<void> {
+  async executeHandler(command: UpdateProductInCartCommand): Promise<void> {
     const { productId, customerId, quantity } = command.dto;
 
     const productInCart = await this.validateProduct(productId, customerId);

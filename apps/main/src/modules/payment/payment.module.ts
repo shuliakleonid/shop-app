@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { CreatePaymentOrderUseCase } from './application/use-cases/create-payment-order.use-case';
+import { CreatePaymentOrderHandler } from './application/use-cases/create-payment-order.handler';
 import { CqrsModule } from '@nestjs/cqrs';
 import { PaymentStripeController } from './api/payment.controller';
 import { PaymentStripeService } from '../payment-stripe/application/payment-stripe.service';
@@ -12,7 +12,7 @@ import { KafkaModule } from '@common/modules/kafka/kafka.module';
 import { ConfigModule } from '@nestjs/config';
 import stripe from '@common/modules/api-config/stripe.config';
 
-const useCases = [CreatePaymentOrderUseCase];
+const useCases = [CreatePaymentOrderHandler];
 
 @Module({
   imports: [

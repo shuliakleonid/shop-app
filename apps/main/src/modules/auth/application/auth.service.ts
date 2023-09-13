@@ -1,6 +1,6 @@
 import * as bcrypt from 'bcrypt';
 import { Injectable, Logger } from '@nestjs/common';
-import { LoginCommand } from './use-cases/login.use-case';
+import { LoginCommand } from './use-cases/login.handler';
 import { TokensType } from './types/types';
 import { ApiJwtService } from '../../api-jwt/api-jwt.service';
 import { SessionsRepository } from '../../sessions/infrastructure/sessions-repository';

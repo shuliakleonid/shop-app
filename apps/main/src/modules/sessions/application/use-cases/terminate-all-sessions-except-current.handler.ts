@@ -1,6 +1,6 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { SessionsService } from '../sessions.service';
-import { BaseNotificationUseCase } from '@common/main/use-cases/base-notification.use-case';
+import { BaseNotificationHandler } from '@common/main/use-cases/base-notification.use-case';
 import { SessionsRepository } from '../../infrastructure/sessions-repository';
 
 export class TerminateAllSessionsExceptCurrentCommand {
@@ -8,8 +8,8 @@ export class TerminateAllSessionsExceptCurrentCommand {
 }
 
 @CommandHandler(TerminateAllSessionsExceptCurrentCommand)
-export class TerminateAllSessionsExceptCurrentUseCase
-  extends BaseNotificationUseCase<TerminateAllSessionsExceptCurrentCommand, void>
+export class TerminateAllSessionsExceptCurrentHandler
+  extends BaseNotificationHandler<TerminateAllSessionsExceptCurrentCommand, void>
   implements ICommandHandler<TerminateAllSessionsExceptCurrentCommand>
 {
   constructor(
@@ -19,7 +19,7 @@ export class TerminateAllSessionsExceptCurrentUseCase
     super();
   }
 
-  async executeUseCase(command: TerminateAllSessionsExceptCurrentCommand): Promise<void> {
+  async executeHandler(command: TerminateAllSessionsExceptCurrentCommand): Promise<void> {
     const { userId, deviceId } = command;
     await this.sessionsService.findSessionByDeviceId(deviceId, userId);
     await this.sessionsRepository.deleteAllSessionsExceptCurrent(deviceId, userId);

@@ -1,6 +1,6 @@
 import { CreateOrderDto } from '../../api/dtos/request/create-order.dto';
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
-import { BaseNotificationUseCase } from '@common/main/use-cases/base-notification.use-case';
+import { BaseNotificationHandler } from '@common/main/use-cases/base-notification.use-case';
 import { OrdersRepository } from '../../infrastructure/orders.repository';
 import { ProducerService } from '@common/modules/kafka/producer.service';
 
@@ -9,15 +9,15 @@ export class CreateOrderCommand {
 }
 
 @CommandHandler(CreateOrderCommand)
-export class CreateOrderUseCase
-  extends BaseNotificationUseCase<CreateOrderCommand, void>
+export class CreateOrderHandler
+  extends BaseNotificationHandler<CreateOrderCommand, void>
   implements ICommandHandler<CreateOrderCommand>
 {
   constructor(private readonly orderRepository: OrdersRepository, private readonly _kafka: ProducerService) {
     super();
   }
 
-  async executeUseCase(command: CreateOrderCommand): Promise<void> {
+  async executeHandler(command: CreateOrderCommand): Promise<void> {
     await this.create();
     const { orders, customerId } = command.createOrder;
 

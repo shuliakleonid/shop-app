@@ -4,11 +4,16 @@ import { CommandBus } from '@nestjs/cqrs';
 import { SessionData } from '@main/decorators/session-data.decorator';
 import { SessionsQueryRepository } from '../infrastructure/sessions-query-repository';
 import { SessionDto } from '../application/dto/session.dto';
-import { DeleteSelectedSessionCommand } from '../application/use-cases/delete-selected-session-use.case';
+import { DeleteSelectedSessionCommand } from '../application/use-cases/delete-selected-session.handler';
 import { ResultNotification } from '@common/validators/result-notification';
-import { TerminateAllSessionsExceptCurrentCommand } from '../application/use-cases/terminate-all-sessions-except-current-use.case';
+import { TerminateAllSessionsExceptCurrentCommand } from '../application/use-cases/terminate-all-sessions-except-current.handler';
 import { DevicesViewModel } from './session.view.dto';
 import { RefreshTokenGuard } from '../../auth/api/guards/refresh-token.guard';
+import {
+  SwaggerDecoratorsByDeleteAllSessionsExceptCurrent,
+  SwaggerDecoratorsByDeleteSelectedSession,
+  SwaggerDecoratorsByGetUserSessions,
+} from '@main/modules/sessions/swagger/swagger.sessions.decorators';
 
 @ApiTags(`Device's`)
 @ApiBearerAuth()

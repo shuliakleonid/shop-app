@@ -9,24 +9,24 @@ import {
   SwaggerDecoratorsByUpdateTokens,
 } from '../swagger/swagger.auth.decorators';
 import { RegisterInputDto } from './dtos/request/register.dto';
-import { RegisterUserCommand } from '../application/use-cases/register-user.use-case';
+import { RegisterUserCommand } from '../application/use-cases/register-user.handler';
 import { ResultNotification } from '@common/validators/result-notification';
 import { CurrentCustomerId } from '@common/decorators/user.decorator';
 import { TokensType } from '../application/types/types';
-import { LoginCommand } from '../application/use-cases/login.use-case';
+import { LoginCommand } from '../application/use-cases/login.handler';
 import { LoginInputDto } from './dtos/request/login.dto';
 import { LoginSuccessViewDto } from './dtos/response/login-success.dto';
 import { Response } from 'express';
 import { LocalAuthGuard } from './guards/local-auth.guard';
-import { CheckLoginBodyFieldsGuard } from '../../../guards/check-login-body-fields.guard';
+import { CheckLoginBodyFieldsGuard } from '@main/guards/check-login-body-fields.guard';
 import { RefreshTokenGuard } from './guards/refresh-token.guard';
-import { SessionData } from '../../../decorators/session-data.decorator';
+import { SessionData } from '@main/decorators/session-data.decorator';
 import { SessionDto } from '../../sessions/application/dto/session.dto';
-import { LogoutCommand } from '../application/use-cases/logout.use-case';
-import { UpdateTokensCommand } from '../application/use-cases/update-tokens.use-case';
+import { LogoutCommand } from '../application/use-cases/logout.handler';
 import { MeViewDto } from './dtos/response/me.dto';
 import { CustomerQueryRepository } from '../../customers/infrastructure/users.query-repository';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
+import { UpdateTokensCommand } from '@main/modules/auth/application/use-cases/update-tokens.handler';
 
 @ApiTags('Auth')
 @Controller('auth')

@@ -1,6 +1,6 @@
 import { CreateCategoryDto } from '../../api/dtos/request/create-category.dto';
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
-import { BaseNotificationUseCase } from '@common/main/use-cases/base-notification.use-case';
+import { BaseNotificationHandler } from '@common/main/use-cases/base-notification.use-case';
 import { CategoryRepository } from '../../infrastructure/category.repository';
 import { Category } from '../../domain/category.entity';
 
@@ -9,15 +9,15 @@ export class CreateCategoryCommand {
 }
 
 @CommandHandler(CreateCategoryCommand)
-export class CreateCategoryUseCase
-  extends BaseNotificationUseCase<CreateCategoryCommand, void>
+export class CreateCategoryHandler
+  extends BaseNotificationHandler<CreateCategoryCommand, void>
   implements ICommandHandler<CreateCategoryCommand>
 {
   constructor(private readonly categoryRepository: CategoryRepository) {
     super();
   }
 
-  async executeUseCase(command: CreateCategoryCommand): Promise<void> {
+  async executeHandler(command: CreateCategoryCommand): Promise<void> {
     const { name } = command.dto;
 
     const categoryEntity = Category.create({ name });

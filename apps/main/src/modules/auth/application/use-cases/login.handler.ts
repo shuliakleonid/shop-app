@@ -1,7 +1,7 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { TokensType } from '../types/types';
 import { AuthService } from '../auth.service';
-import { BaseNotificationUseCase } from '@common/main/use-cases/base-notification.use-case';
+import { BaseNotificationHandler } from '@common/main/use-cases/base-notification.use-case';
 import { ProducerService } from '@common/modules/kafka/producer.service';
 
 export class LoginCommand {
@@ -9,15 +9,15 @@ export class LoginCommand {
 }
 
 @CommandHandler(LoginCommand)
-export class LoginUseCase
-  extends BaseNotificationUseCase<LoginCommand, TokensType>
+export class LoginHandler
+  extends BaseNotificationHandler<LoginCommand, TokensType>
   implements ICommandHandler<LoginCommand>
 {
   constructor(protected authService: AuthService, private readonly _kafka: ProducerService) {
     super();
   }
 
-  async executeUseCase(command: LoginCommand): Promise<TokensType> {
+  async executeHandler(command: LoginCommand): Promise<TokensType> {
     const token = await this.authService.loginUser(command);
     await this.create(command.customerId);
     return token;

@@ -1,5 +1,5 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
-import { BaseNotificationUseCase } from '@common/main/use-cases/base-notification.use-case';
+import { BaseNotificationHandler } from '@common/main/use-cases/base-notification.use-case';
 import { Product } from '../../domain/product.entity';
 import { ProductsRepository } from '../../infrastructure/products.repository';
 import { NotificationException } from '@common/validators/result-notification';
@@ -10,15 +10,15 @@ export class DeleteProductsCommand {
 }
 
 @CommandHandler(DeleteProductsCommand)
-export class DeleteProductsUseCase
-  extends BaseNotificationUseCase<DeleteProductsCommand, void>
+export class DeleteProductsHandler
+  extends BaseNotificationHandler<DeleteProductsCommand, void>
   implements ICommandHandler<DeleteProductsCommand>
 {
   constructor(private readonly productsRepository: ProductsRepository) {
     super();
   }
 
-  async executeUseCase(command: DeleteProductsCommand): Promise<void> {
+  async executeHandler(command: DeleteProductsCommand): Promise<void> {
     const { id } = command;
 
     const product = await this.validate(id);

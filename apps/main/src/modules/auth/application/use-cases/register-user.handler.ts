@@ -3,7 +3,7 @@ import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { AuthService } from '../auth.service';
 import { CustomerEntity } from '../../../customers/domain/customer.entity';
 import { CustomerRepository } from '../../../customers/infrastructure/customer.repository';
-import { BaseNotificationUseCase } from '@common/main/use-cases/base-notification.use-case';
+import { BaseNotificationHandler } from '@common/main/use-cases/base-notification.use-case';
 import { NotificationException } from '@common/validators/result-notification';
 import { NotificationCode } from '@common/configuration/notificationCode';
 
@@ -12,15 +12,15 @@ export class RegisterUserCommand {
 }
 
 @CommandHandler(RegisterUserCommand)
-export class RegisterUserUseCase
-  extends BaseNotificationUseCase<RegisterUserCommand, void>
+export class RegisterUserHandler
+  extends BaseNotificationHandler<RegisterUserCommand, void>
   implements ICommandHandler<RegisterUserCommand>
 {
   constructor(private readonly authService: AuthService, private readonly customerRepository: CustomerRepository) {
     super();
   }
 
-  async executeUseCase(command: RegisterUserCommand) {
+  async executeHandler(command: RegisterUserCommand) {
     const { userName, email, password } = command.userInputModel;
 
     const foundCustomer = await this.customerRepository.findByEmail(email);

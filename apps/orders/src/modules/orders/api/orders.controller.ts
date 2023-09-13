@@ -2,12 +2,12 @@ import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, ParseIntPip
 import { CommandBus } from '@nestjs/cqrs';
 import { ResultNotification } from '@common/validators/result-notification';
 import { CreateOrderDto } from './dtos/request/create-order.dto';
-import { CreateOrderCommand } from '../application/use-cases/create-order.use-case';
+import { CreateOrderCommand } from '../application/use-cases/create-order.handler';
 import { UpdateOrderDto } from './dtos/request/update-order.dto';
 
 import { CurrentCustomerId } from '@common/decorators/user.decorator';
-import { UpdateOrderCommand } from '../application/use-cases/update-order.use-case';
-import { DeleteOrderCommand } from '../application/use-cases/delete-order.use-case';
+import { UpdateOrderCommand } from '../application/use-cases/update-order.handler';
+import { DeleteOrderCommand } from '../application/use-cases/delete-order.handler';
 import { OrdersQueryRepository } from '../infrastructure/orders.query-repository';
 
 @Controller('orders')

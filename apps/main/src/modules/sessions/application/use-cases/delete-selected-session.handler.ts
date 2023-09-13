@@ -1,7 +1,7 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { SessionsService } from '../sessions.service';
 import { SessionsRepository } from '../../infrastructure/sessions-repository';
-import { BaseNotificationUseCase } from '@common/main/use-cases/base-notification.use-case';
+import { BaseNotificationHandler } from '@common/main/use-cases/base-notification.use-case';
 
 /**
  * @description Delete selected session command
@@ -15,8 +15,8 @@ export class DeleteSelectedSessionCommand {
 }
 
 @CommandHandler(DeleteSelectedSessionCommand)
-export class DeleteSelectedSessionUseCase
-  extends BaseNotificationUseCase<DeleteSelectedSessionCommand, void>
+export class DeleteSelectedSessionHandler
+  extends BaseNotificationHandler<DeleteSelectedSessionCommand, void>
   implements ICommandHandler<DeleteSelectedSessionCommand>
 {
   constructor(
@@ -30,7 +30,7 @@ export class DeleteSelectedSessionUseCase
    * @description Delete selected session
    * @param command
    */
-  async executeUseCase(command: DeleteSelectedSessionCommand): Promise<void> {
+  async executeHandler(command: DeleteSelectedSessionCommand): Promise<void> {
     const { userId, deviceIdForDelete, deviceId } = command;
     await this.sessionsService.findSessionByDeviceId(deviceIdForDelete, userId);
     await this.sessionsService.findSessionByDeviceId(deviceId, userId);

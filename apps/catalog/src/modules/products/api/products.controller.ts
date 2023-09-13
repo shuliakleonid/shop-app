@@ -2,10 +2,10 @@ import { Body, Controller, Delete, HttpCode, HttpStatus, Param, ParseIntPipe, Po
 import { CommandBus } from '@nestjs/cqrs';
 import { ResultNotification } from '@common/validators/result-notification';
 import { CreateProductDto } from './dtos/request/create-product.dto';
-import { CreateProductsCommand } from '../application/use-cases/create-products.use-case';
+import { CreateProductsCommand } from '../application/use-cases/create-products.handler';
 import { UpdateProductDto } from './dtos/request/update-product.dto';
-import { UpdateProductsCommand } from '../application/use-cases/update-products.use-case';
-import { DeleteProductsCommand } from '../application/use-cases/delete-products.use-case';
+import { UpdateProductsCommand } from '../application/use-cases/update-products.handler';
+import { DeleteProductsCommand } from '../application/use-cases/delete-products.handler';
 
 @Controller('products')
 export class ProductsController {

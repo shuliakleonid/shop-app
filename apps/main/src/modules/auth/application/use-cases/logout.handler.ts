@@ -1,6 +1,6 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { SessionsRepository } from '../../../sessions/infrastructure/sessions-repository';
-import { BaseNotificationUseCase } from '@common/main/use-cases/base-notification.use-case';
+import { BaseNotificationHandler } from '@common/main/use-cases/base-notification.use-case';
 import { NotificationException } from '@common/validators/result-notification';
 import { NotificationCode } from '@common/configuration/notificationCode';
 
@@ -9,15 +9,15 @@ export class LogoutCommand {
 }
 
 @CommandHandler(LogoutCommand)
-export class LogoutUseCase
-  extends BaseNotificationUseCase<LogoutCommand, void>
+export class LogoutHandler
+  extends BaseNotificationHandler<LogoutCommand, void>
   implements ICommandHandler<LogoutCommand>
 {
   constructor(protected sessionsRepository: SessionsRepository) {
     super();
   }
 
-  async executeUseCase(command: LogoutCommand) {
+  async executeHandler(command: LogoutCommand) {
     const { userId, deviceId } = command;
 
     const foundSession = await this.sessionsRepository.findSessionByDeviceId(deviceId);

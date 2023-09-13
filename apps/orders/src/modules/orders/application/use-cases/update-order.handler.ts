@@ -1,6 +1,6 @@
 import { UpdateOrderDto } from '../../api/dtos/request/update-order.dto';
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
-import { BaseNotificationUseCase } from '@common/main/use-cases/base-notification.use-case';
+import { BaseNotificationHandler } from '@common/main/use-cases/base-notification.use-case';
 import { OrdersRepository } from '../../infrastructure/orders.repository';
 
 export class UpdateOrderCommand {
@@ -8,15 +8,15 @@ export class UpdateOrderCommand {
 }
 
 @CommandHandler(UpdateOrderCommand)
-export class UpdateOrderUseCase
-  extends BaseNotificationUseCase<UpdateOrderCommand, void>
+export class UpdateOrderHandler
+  extends BaseNotificationHandler<UpdateOrderCommand, void>
   implements ICommandHandler<UpdateOrderCommand>
 {
   constructor(private readonly OrderRepository: OrdersRepository) {
     super();
   }
 
-  async executeUseCase(command: UpdateOrderCommand): Promise<void> {
+  async executeHandler(command: UpdateOrderCommand): Promise<void> {
     //   const { name, price, description, id, quantity } = command.dto;
     //   const product = await this.validate(id);
     //

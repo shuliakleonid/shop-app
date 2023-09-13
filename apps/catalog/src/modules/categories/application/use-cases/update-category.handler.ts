@@ -1,6 +1,6 @@
 import { UpdateCategoryDto } from '../../api/dtos/request/update-category.dto';
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
-import { BaseNotificationUseCase } from '@common/main/use-cases/base-notification.use-case';
+import { BaseNotificationHandler } from '@common/main/use-cases/base-notification.use-case';
 import { CategoryRepository } from '../../infrastructure/category.repository';
 import { NotificationException } from '@common/validators/result-notification';
 import { NotificationCode } from '@common/configuration/notificationCode';
@@ -11,15 +11,15 @@ export class UpdateCategoryCommand {
 }
 
 @CommandHandler(UpdateCategoryCommand)
-export class UpdateCategoryUseCase
-  extends BaseNotificationUseCase<UpdateCategoryCommand, void>
+export class UpdateCategoryHandler
+  extends BaseNotificationHandler<UpdateCategoryCommand, void>
   implements ICommandHandler<UpdateCategoryCommand>
 {
   constructor(private readonly categoryRepository: CategoryRepository) {
     super();
   }
 
-  async executeUseCase(command: UpdateCategoryCommand): Promise<void> {
+  async executeHandler(command: UpdateCategoryCommand): Promise<void> {
     const { name, id } = command.dto;
     const category = await this.validate(id);
 
