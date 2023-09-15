@@ -1,9 +1,9 @@
-import { Customer } from '@prisma/client';
 import { ApiProperty } from '@nestjs/swagger';
+import { User } from '@prisma/client';
 
 export class MeViewDto {
   @ApiProperty()
-  customerId: number;
+  userId: number;
 
   @ApiProperty()
   userName: string;
@@ -11,9 +11,9 @@ export class MeViewDto {
   @ApiProperty()
   email: string;
 
-  constructor(customer: Customer) {
-    this.customerId = customer.id;
-    this.userName = customer.userName;
-    this.email = customer.email;
+  constructor(user: User) {
+    this.userId = user.id;
+    this.userName = user.userName;
+    this.email = user.email;
   }
 }

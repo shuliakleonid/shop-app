@@ -10,10 +10,10 @@ export abstract class ISessionsQueryRepository {
 @Injectable()
 export class SessionsQueryRepository implements ISessionsQueryRepository {
   constructor(private readonly prisma: PrismaService) {}
-  async findSessionsByUserId(customerId: number): Promise<SessionEntity[]> {
+  async findSessionsByUserId(userId: number): Promise<SessionEntity[]> {
     const sessions = await this.prisma.session.findMany({
       where: {
-        customerId,
+        userId,
       },
     });
     return sessions.map(session => plainToInstance(SessionEntity, session));

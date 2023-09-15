@@ -6,7 +6,7 @@ import { ApiJwtService } from '../../api-jwt/api-jwt.service';
 import { SessionsRepository } from '../../sessions/infrastructure/sessions-repository';
 import { SessionEntity } from '../../sessions/domain/session.entity';
 import { LoginInputDto } from '../api/dtos/request/login.dto';
-import { CustomerRepository } from '../../customers/infrastructure/customer.repository';
+import { UserRepository } from '@main/modules/user/infrastructure/user.repository';
 
 @Injectable()
 export class AuthService {
@@ -15,7 +15,7 @@ export class AuthService {
   constructor(
     private readonly apiJwtService: ApiJwtService,
     private readonly sessionsRepository: SessionsRepository,
-    private readonly customerRepository: CustomerRepository,
+    private readonly customerRepository: UserRepository,
   ) {}
 
   async checkCredentialsOfCustomer(dto: LoginInputDto): Promise<number | null> {

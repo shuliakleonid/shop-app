@@ -13,7 +13,7 @@ import {
 } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
 import { JwtAuthGuard } from '@main/modules/auth/api/guards/jwt-auth.guard';
-import { CurrentCustomerId } from '@common/decorators/user.decorator';
+import { CurrentUserId } from '@common/decorators/user.decorator';
 import { ResultNotification } from '@common/validators/result-notification';
 import { AddProductToCartDto } from './dtos/request/add-product-to-cart.dto';
 import { AddProductToCartCommand } from '../application/use-cases/add-product-to-cart.use-case';
@@ -32,14 +32,14 @@ export class CartController {
   ) {}
 
   @Get()
-  async getCart(@CurrentCustomerId() customerId: number) {
+  async getCart(@CurrentUserId() customerId: number) {
     const cartItems = await this.cartItemQueryRepository.getCustomerCartItems(customerId);
     return new CartDto(cartItems);
   }
 
   @Post()
   @HttpCode(HttpStatus.CREATED)
-  async addProductToCart(@Body() body: AddProductToCartDto, @CurrentCustomerId() customerId: number) {
+  async addProductToCart(@Body() body: AddProductToCartDto, @CurrentUserId() customerId: number) {
     const notification = await this.commandBus.execute<AddProductToCartCommand, ResultNotification<null>>(
       new AddProductToCartCommand({ ...body, customerId }),
     );
@@ -48,7 +48,7 @@ export class CartController {
 
   @Put()
   @HttpCode(HttpStatus.OK)
-  async updateProductInCart(@Body() body: UpdateCartDto, @CurrentCustomerId() customerId: number) {
+  async updateProductInCart(@Body() body: UpdateCartDto, @CurrentUserId() customerId: number) {
     const notification = await this.commandBus.execute<UpdateProductInCartCommand, ResultNotification<null>>(
       new UpdateProductInCartCommand({ ...body, customerId }),
     );
@@ -59,7 +59,7 @@ export class CartController {
   @HttpCode(HttpStatus.OK)
   async removeProductFromCart(
     @Param('productId', ParseIntPipe) productId: number,
-    @CurrentCustomerId() customerId: number,
+    @CurrentUserId() customerId: number,
   ) {
     const notification = await this.commandBus.execute<DeleteProductFromCartCommand, ResultNotification<null>>(
       new DeleteProductFromCartCommand({

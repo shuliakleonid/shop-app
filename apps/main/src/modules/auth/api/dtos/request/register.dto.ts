@@ -1,7 +1,7 @@
 import { IsEmail, IsString, Length, Matches } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 import { Transform } from 'class-transformer';
-import { customerFieldParameters } from '../../../../customers/domain/customer.entity';
+import { customerFieldParameters } from '@main/modules/user/domain/user.entity';
 
 export class RegisterInputDto {
   @ApiProperty({ pattern: '^[a-zA-Z0-9_-]*$', example: 'string' })

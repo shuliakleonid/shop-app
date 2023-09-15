@@ -5,7 +5,7 @@ import { CreateOrderDto } from './dtos/request/create-order.dto';
 import { CreateOrderCommand } from '../application/use-cases/create-order.handler';
 import { UpdateOrderDto } from './dtos/request/update-order.dto';
 
-import { CurrentCustomerId } from '@common/decorators/user.decorator';
+import { CurrentUserId } from '@common/decorators/user.decorator';
 import { UpdateOrderCommand } from '../application/use-cases/update-order.handler';
 import { DeleteOrderCommand } from '../application/use-cases/delete-order.handler';
 import { OrdersQueryRepository } from '../infrastructure/orders.query-repository';
@@ -15,7 +15,7 @@ export class OrdersController {
   constructor(private readonly commandBus: CommandBus, private readonly orderQueryRepository: OrdersQueryRepository) {}
 
   @Post()
-  async createOrder(@Body() body: CreateOrderDto[], @CurrentCustomerId() customerId: number) {
+  async createOrder(@Body() body: CreateOrderDto[], @CurrentUserId() customerId: number) {
     const notification = await this.commandBus.execute<CreateOrderCommand, ResultNotification<null>>(
       new CreateOrderCommand({ orders: body, customerId }),
     );
@@ -41,7 +41,7 @@ export class OrdersController {
   }
 
   @Get()
-  async getOrder(@CurrentCustomerId() customerId: number) {
+  async getOrder(@CurrentUserId() customerId: number) {
     return await this.orderQueryRepository.findById(customerId);
   }
 }

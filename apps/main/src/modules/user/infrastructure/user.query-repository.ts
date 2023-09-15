@@ -2,10 +2,14 @@ import { Injectable } from '@nestjs/common';
 import { PrismaService } from '@common/modules/prisma/prisma.service';
 
 @Injectable()
-export class CustomerQueryRepository {
+export class UserQueryRepository {
   constructor(private readonly prisma: PrismaService) {}
 
   async findUserById(id: number) {
-    return this.prisma.customer.findFirst({ where: { id } });
+    return this.prisma.user.findFirst({ where: { id } });
+  }
+
+  getAllCustomers() {
+    return 'all customer';
   }
 }

@@ -20,7 +20,7 @@ export class SessionsRepository {
     await this.prisma.session.update({
       where: { deviceId: session.deviceId },
       data: {
-        customerId: session.customerId,
+        userId: session.userId,
         exp: session.exp,
         ip: session.ip,
         deviceName: session.deviceName,
@@ -40,11 +40,10 @@ export class SessionsRepository {
     return plainToInstance(SessionEntity, session);
   }
 
-  async deleteAllSessionsExceptCurrent(deviceId: number, customerId: number): Promise<void> {
-    // remove all sessions except current where userId = userId and deviceId != deviceId
+  async deleteAllSessionsExceptCurrent(deviceId: number, userId: number): Promise<void> {
     await this.prisma.session.deleteMany({
       where: {
-        AND: [{ customerId: { equals: customerId } }, { deviceId: { not: { equals: deviceId } } }],
+        AND: [{ userId: { equals: userId } }, { deviceId: { not: { equals: deviceId } } }],
       },
     });
   }

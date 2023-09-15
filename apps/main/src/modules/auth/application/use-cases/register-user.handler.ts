@@ -1,8 +1,8 @@
 import { RegisterInputDto } from '../../api/dtos/request/register.dto';
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { AuthService } from '../auth.service';
-import { CustomerEntity } from '../../../customers/domain/customer.entity';
-import { CustomerRepository } from '../../../customers/infrastructure/customer.repository';
+import { UserEntity } from '@main/modules/user/domain/user.entity';
+import { UserRepository } from '@main/modules/user/infrastructure/user.repository';
 import { BaseNotificationHandler } from '@common/main/use-cases/base-notification.use-case';
 import { NotificationException } from '@common/validators/result-notification';
 import { NotificationCode } from '@common/configuration/notificationCode';
@@ -16,7 +16,7 @@ export class RegisterUserHandler
   extends BaseNotificationHandler<RegisterUserCommand, void>
   implements ICommandHandler<RegisterUserCommand>
 {
-  constructor(private readonly authService: AuthService, private readonly customerRepository: CustomerRepository) {
+  constructor(private readonly authService: AuthService, private readonly customerRepository: UserRepository) {
     super();
   }
 
@@ -30,7 +30,7 @@ export class RegisterUserHandler
     }
 
     const passwordHash = await this.authService.getPasswordHash(password);
-    const user = CustomerEntity.initCreateUser(userName, email, passwordHash);
+    const user = UserEntity.initCreateUser(userName, email, passwordHash);
 
     await this.customerRepository.save(user);
   }

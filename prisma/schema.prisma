@@ -7,55 +7,43 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Customer {
+model User {
   id        Int       @id @default(autoincrement())
+  roleId    Int       @default(1)
   userName  String
   email     String    @unique
   password  String
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
+  role      Role      @relation(fields: [roleId], references: [code])
   sessions  Session[]
 
-  @@map("customers")
+  @@map("users")
 }
 
 model Session {
-  deviceId   Int       @id @default(autoincrement())
-  customerId Int?
+  deviceId   Int     @id @default(autoincrement())
+  userId     Int?
   exp        Int?
   ip         String?
   deviceName String?
   iat        Int?
-  customer   Customer? @relation(fields: [customerId], references: [id])
+  customer   User?   @relation(fields: [userId], references: [id])
 
   @@map("sessions")
 }
 
-model Administrator {
-  id                Int                 @id @default(autoincrement())
-  userName          String
-  password          String
-  AdministratorRole AdministratorRole[]
-
-  @@map("administrator")
-}
-
-model AdministratorRole {
-  id              Int           @id @default(autoincrement())
-  administratorId Int
-  roleId          Int
-  administrator   Administrator @relation(fields: [administratorId], references: [id])
-  role            Role          @relation(fields: [roleId], references: [id])
-
-  @@map("administratorRole")
+enum RoleTitle {
+  ADMINISTRATOR
+  CUSTOMER
 }
 
 model Role {
-  id                Int                 @id @default(autoincrement())
-  code              Int
-  name              String
-  description       String
-  AdministratorRole AdministratorRole[]
+  id          Int       @id @default(autoincrement())
+  code        Int       @unique
+  name        RoleTitle @default(CUSTOMER)
+  description String
+  users       User[]
 
   @@map("role")
 }

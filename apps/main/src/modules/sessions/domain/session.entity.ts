@@ -1,15 +1,15 @@
 import { Session } from '@prisma/client';
-import { CustomerEntity } from '../../customers/domain/customer.entity';
+import { UserEntity } from '@main/modules/user/domain/user.entity';
 import { SessionExtendedDto } from '../application/dto/session-extended.dto';
 
 export class SessionEntity implements Session {
   deviceId: number;
-  customerId: number;
+  userId: number;
   exp: number;
   ip: string;
   deviceName: string;
   iat: number;
-  customer: CustomerEntity;
+  user: UserEntity;
 
   updateSessionData(dto: SessionExtendedDto) {
     this.ip = dto.ip;
@@ -22,7 +22,7 @@ export class SessionEntity implements Session {
     ip: string;
     exp: number;
     deviceId: number;
-    customerId: number;
+    userId: number;
     iat: number;
     deviceName: string;
   }) {
@@ -30,13 +30,13 @@ export class SessionEntity implements Session {
     session.ip = param.ip;
     session.exp = param.exp;
     session.deviceId = param.deviceId;
-    session.customerId = param.customerId;
+    session.userId = param.userId;
     session.iat = param.iat;
     session.deviceName = param.deviceName;
     return session;
   }
 
-  hasOwner(customerId: number) {
-    return this.customerId === customerId;
+  hasOwner(userId: number) {
+    return this.userId === userId;
   }
 }

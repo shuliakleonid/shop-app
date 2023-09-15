@@ -11,7 +11,6 @@ import {
 import { RegisterInputDto } from './dtos/request/register.dto';
 import { RegisterUserCommand } from '../application/use-cases/register-user.handler';
 import { ResultNotification } from '@common/validators/result-notification';
-import { CurrentCustomerId } from '@common/decorators/user.decorator';
 import { TokensType } from '../application/types/types';
 import { LoginCommand } from '../application/use-cases/login.handler';
 import { LoginInputDto } from './dtos/request/login.dto';
@@ -24,17 +23,15 @@ import { SessionData } from '@main/decorators/session-data.decorator';
 import { SessionDto } from '../../sessions/application/dto/session.dto';
 import { LogoutCommand } from '../application/use-cases/logout.handler';
 import { MeViewDto } from './dtos/response/me.dto';
-import { CustomerQueryRepository } from '../../customers/infrastructure/users.query-repository';
+import { UserQueryRepository } from '@main/modules/user/infrastructure/user.query-repository';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
 import { UpdateTokensCommand } from '@main/modules/auth/application/use-cases/update-tokens.handler';
+import { CurrentUserId } from '@common/decorators/user.decorator';
 
 @ApiTags('Auth')
 @Controller('auth')
 export class AuthController {
-  constructor(
-    private readonly commandBus: CommandBus,
-    private readonly customerQueryRepository: CustomerQueryRepository,
-  ) {}
+  constructor(private readonly commandBus: CommandBus, private readonly customerQueryRepository: UserQueryRepository) {}
 
   @SwaggerDecoratorsByRegistration()
   @Post('registration')
@@ -54,11 +51,11 @@ export class AuthController {
     @Ip() ip: string,
     @Headers('user-agent') deviceName = 'unknown',
     @Res({ passthrough: true }) res: Response,
-    @CurrentCustomerId() customerId: number,
+    @CurrentUserId() userId: number,
     @Body() body: LoginInputDto,
   ): Promise<LoginSuccessViewDto> {
     const notification = await this.commandBus.execute<LoginCommand, ResultNotification<TokensType>>(
-      new LoginCommand(customerId, ip, deviceName),
+      new LoginCommand(userId, ip, deviceName),
     );
     const { accessToken, refreshToken } = notification.getData();
     res.cookie('refreshToken', refreshToken, { httpOnly: true, secure: true, sameSite: 'none' });
@@ -71,7 +68,7 @@ export class AuthController {
   @HttpCode(HttpStatus.NO_CONTENT)
   async logout(@SessionData() sessionData: SessionDto, @Res({ passthrough: true }) res: Response): Promise<null> {
     const notification = await this.commandBus.execute<LogoutCommand, ResultNotification<null>>(
-      new LogoutCommand(sessionData.customerId, sessionData.deviceId),
+      new LogoutCommand(sessionData.userId, sessionData.deviceId),
     );
     res.clearCookie('refreshToken');
     return notification.getData();
@@ -100,8 +97,8 @@ export class AuthController {
   @SwaggerDecoratorsByMe()
   @Get('me')
   @UseGuards(JwtAuthGuard)
-  async getMyInfo(@CurrentCustomerId() customerId: number): Promise<MeViewDto> {
-    const user = await this.customerQueryRepository.findUserById(customerId);
+  async getMyInfo(@CurrentUserId() userId: number): Promise<MeViewDto> {
+    const user = await this.customerQueryRepository.findUserById(userId);
     if (!user) return;
     return new MeViewDto(user);
   }

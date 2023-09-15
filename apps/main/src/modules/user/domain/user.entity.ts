@@ -1,5 +1,5 @@
-import { Customer } from '@prisma/client';
 import { BaseDateEntity } from '@common/entities/base-date.entity';
+import { User } from '@prisma/client';
 
 export const customerFieldParameters = {
   userNameLength: {
@@ -8,8 +8,9 @@ export const customerFieldParameters = {
   },
 };
 
-export class CustomerEntity extends BaseDateEntity implements Customer {
+export class UserEntity extends BaseDateEntity implements User {
   id: number;
+  roleId: number;
   userName: string;
   email: string;
   password: string;
@@ -18,8 +19,8 @@ export class CustomerEntity extends BaseDateEntity implements Customer {
     super();
   }
 
-  static initCreateUser(userName: string, email: string, password: string): CustomerEntity {
-    const instanceUser = new CustomerEntity();
+  static initCreateUser(userName: string, email: string, password: string): UserEntity {
+    const instanceUser = new UserEntity();
     instanceUser.userName = userName;
     instanceUser.email = email.toLowerCase();
     instanceUser.password = password;

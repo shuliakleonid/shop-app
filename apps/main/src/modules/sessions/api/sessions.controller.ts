@@ -28,7 +28,7 @@ export class SessionsController {
   @SwaggerDecoratorsByGetUserSessions()
   @Get()
   async getUserSessions(@SessionData() sessionData: SessionDto): Promise<DevicesViewModel> {
-    const sessions = await this.sessionsQueryRepository.findSessionsByUserId(sessionData.customerId);
+    const sessions = await this.sessionsQueryRepository.findSessionsByUserId(sessionData.userId);
     return new DevicesViewModel(sessions, sessionData.deviceId);
   }
 
@@ -40,7 +40,7 @@ export class SessionsController {
     @SessionData() sessionData: SessionDto,
   ): Promise<void> {
     await this.commandBus.execute<DeleteSelectedSessionCommand, ResultNotification<void>>(
-      new DeleteSelectedSessionCommand(sessionData.customerId, deviceId, sessionData.deviceId),
+      new DeleteSelectedSessionCommand(sessionData.userId, deviceId, sessionData.deviceId),
     );
   }
 
@@ -49,7 +49,7 @@ export class SessionsController {
   @HttpCode(HttpStatus.NO_CONTENT)
   async terminateAllSessionsExceptCurrent(@SessionData() sessionData: SessionDto): Promise<void> {
     await this.commandBus.execute<TerminateAllSessionsExceptCurrentCommand, ResultNotification<void>>(
-      new TerminateAllSessionsExceptCurrentCommand(sessionData.customerId, sessionData.deviceId),
+      new TerminateAllSessionsExceptCurrentCommand(sessionData.userId, sessionData.deviceId),
     );
   }
 }

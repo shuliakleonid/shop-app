@@ -14,10 +14,9 @@ export class RefreshTokenGuard implements CanActivate {
     if (!sessionData) throw new UnauthorizedException();
 
     const foundSession = await this.securityRepository.findSessionByDeviceId(sessionData.deviceId);
-    if (!foundSession || sessionData.iat !== foundSession.iat || sessionData.customerId !== foundSession.customerId)
+    if (!foundSession || sessionData.iat !== foundSession.iat || sessionData.userId !== foundSession.userId)
       throw new UnauthorizedException();
 
-    //@ts-ignore
     req.sessionData = sessionData;
     return true;
   }
