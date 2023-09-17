@@ -1,5 +1,17 @@
 import { ApiTags } from '@nestjs/swagger';
-import { Body, Controller, HttpCode, HttpStatus, Ip, Post, Res, Headers, UseGuards, Get } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Headers,
+  HttpCode,
+  HttpStatus,
+  Ip,
+  Post,
+  Res,
+  SetMetadata,
+  UseGuards,
+} from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
 import {
   SwaggerDecoratorsByLogin,
@@ -18,7 +30,6 @@ import { LoginSuccessViewDto } from './dtos/response/login-success.dto';
 import { Response } from 'express';
 import { LocalAuthGuard } from './guards/local-auth.guard';
 import { CheckLoginBodyFieldsGuard } from '@main/guards/check-login-body-fields.guard';
-import { RefreshTokenGuard } from './guards/refresh-token.guard';
 import { SessionData } from '@main/decorators/session-data.decorator';
 import { SessionDto } from '../../sessions/application/dto/session.dto';
 import { LogoutCommand } from '../application/use-cases/logout.handler';
@@ -26,7 +37,8 @@ import { MeViewDto } from './dtos/response/me.dto';
 import { UserQueryRepository } from '@main/modules/user/infrastructure/user.query-repository';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
 import { UpdateTokensCommand } from '@main/modules/auth/application/use-cases/update-tokens.handler';
-import { CurrentUserId } from '@common/decorators/user.decorator';
+import { CurrentUser } from '@common/decorators/user.decorator';
+import { RoleTitle } from '@prisma/client';
 
 @ApiTags('Auth')
 @Controller('auth')
@@ -42,8 +54,10 @@ export class AuthController {
     );
     return notification.getData();
   }
-  @SwaggerDecoratorsByLogin()
+
   @Post('login')
+  @SwaggerDecoratorsByLogin()
+  @SetMetadata('isPublic', true)
   @UseGuards(LocalAuthGuard)
   @UseGuards(CheckLoginBodyFieldsGuard)
   @HttpCode(HttpStatus.OK)
@@ -51,11 +65,11 @@ export class AuthController {
     @Ip() ip: string,
     @Headers('user-agent') deviceName = 'unknown',
     @Res({ passthrough: true }) res: Response,
-    @CurrentUserId() userId: number,
+    @CurrentUser() user: { userId: number; roles: RoleTitle[] },
     @Body() body: LoginInputDto,
   ): Promise<LoginSuccessViewDto> {
     const notification = await this.commandBus.execute<LoginCommand, ResultNotification<TokensType>>(
-      new LoginCommand(userId, ip, deviceName),
+      new LoginCommand(user, ip, deviceName),
     );
     const { accessToken, refreshToken } = notification.getData();
     res.cookie('refreshToken', refreshToken, { httpOnly: true, secure: true, sameSite: 'none' });
@@ -64,7 +78,6 @@ export class AuthController {
 
   @SwaggerDecoratorsByLogout()
   @Post('logout')
-  @UseGuards(RefreshTokenGuard)
   @HttpCode(HttpStatus.NO_CONTENT)
   async logout(@SessionData() sessionData: SessionDto, @Res({ passthrough: true }) res: Response): Promise<null> {
     const notification = await this.commandBus.execute<LogoutCommand, ResultNotification<null>>(
@@ -76,7 +89,6 @@ export class AuthController {
 
   @SwaggerDecoratorsByUpdateTokens()
   @Post('update-tokens')
-  @UseGuards(RefreshTokenGuard)
   @HttpCode(HttpStatus.OK)
   async updateTokens(
     @SessionData() sessionData: SessionDto,
@@ -97,7 +109,7 @@ export class AuthController {
   @SwaggerDecoratorsByMe()
   @Get('me')
   @UseGuards(JwtAuthGuard)
-  async getMyInfo(@CurrentUserId() userId: number): Promise<MeViewDto> {
+  async getMyInfo(@CurrentUser() userId: number): Promise<MeViewDto> {
     const user = await this.customerQueryRepository.findUserById(userId);
     if (!user) return;
     return new MeViewDto(user);

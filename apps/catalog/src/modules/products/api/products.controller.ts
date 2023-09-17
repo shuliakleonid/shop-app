@@ -1,4 +1,15 @@
-import { Body, Controller, Delete, HttpCode, HttpStatus, Param, ParseIntPipe, Post, Put } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  HttpCode,
+  HttpStatus,
+  Param,
+  ParseIntPipe,
+  Post,
+  Put,
+  UseGuards,
+} from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
 import { ResultNotification } from '@common/validators/result-notification';
 import { CreateProductDto } from './dtos/request/create-product.dto';
@@ -6,11 +17,19 @@ import { CreateProductsCommand } from '../application/use-cases/create-products.
 import { UpdateProductDto } from './dtos/request/update-product.dto';
 import { UpdateProductsCommand } from '../application/use-cases/update-products.handler';
 import { DeleteProductsCommand } from '../application/use-cases/delete-products.handler';
+import { UseRoles } from 'nest-access-control';
+import { JwtAuthGuard } from '@main/modules/auth/api/guards/jwt-auth.guard';
 
 @Controller('products')
+@UseGuards(JwtAuthGuard)
 export class ProductsController {
   constructor(private readonly commandBus: CommandBus) {}
 
+  @UseRoles({
+    resource: 'adminData',
+    action: 'create',
+    possession: 'any',
+  })
   @Post()
   async createProduct(@Body() body: CreateProductDto) {
     const notification = await this.commandBus.execute<CreateProductsCommand, ResultNotification<null>>(
@@ -19,6 +38,11 @@ export class ProductsController {
     return notification.getCode();
   }
 
+  @UseRoles({
+    resource: 'adminData',
+    action: 'update',
+    possession: 'any',
+  })
   @Put('/:id')
   @HttpCode(HttpStatus.OK)
   async updateProduct(@Body() body: UpdateProductDto, @Param('id', ParseIntPipe) id: number) {
@@ -28,6 +52,11 @@ export class ProductsController {
     notification.getCode();
   }
 
+  @UseRoles({
+    resource: 'adminData',
+    action: 'delete',
+    possession: 'any',
+  })
   @Delete('/:id')
   @HttpCode(HttpStatus.OK)
   async deleteProduct(@Param('id', ParseIntPipe) id: number) {

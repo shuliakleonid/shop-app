@@ -30,4 +30,13 @@ export class UserRepository {
     });
     return plainToInstance(UserEntity, user);
   }
+
+  async findById(id: number): Promise<UserEntity | null> {
+    const user = await this.prisma.user.findFirst({
+      where: {
+        id: { equals: id },
+      },
+    });
+    return plainToInstance(UserEntity, user);
+  }
 }

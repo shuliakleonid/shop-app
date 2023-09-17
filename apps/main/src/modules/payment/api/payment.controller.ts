@@ -1,6 +1,6 @@
 import { Body, Controller, Get, Post } from '@nestjs/common';
 import { ResultNotification } from '@common/validators/result-notification';
-import { CurrentUserId } from '@common/decorators/user.decorator';
+import { CurrentUser } from '@common/decorators/user.decorator';
 import { CreatePaymentOrderCommand } from '../application/use-cases/create-payment-order.handler';
 import { CommandBus } from '@nestjs/cqrs';
 import { CreatePaymentOrderDto } from './dtos/request/create-payment-order.dto';
@@ -12,7 +12,7 @@ import { User } from '@prisma/client';
 export class PaymentStripeController {
   constructor(private readonly commandBus: CommandBus) {}
   @Post('order')
-  async paymentOrder(@Body() paymentOrder: CreatePaymentOrderDto, @CurrentUserId() customerId: number) {
+  async paymentOrder(@Body() paymentOrder: CreatePaymentOrderDto, @CurrentUser() customerId: number) {
     const notification = await this.commandBus.execute<CreatePaymentOrderCommand, ResultNotification<string>>(
       new CreatePaymentOrderCommand(customerId, paymentOrder),
     );
@@ -20,5 +20,5 @@ export class PaymentStripeController {
   }
 
   @Get('order')
-  async getOrders(@CurrentUserId() userId: User) {}
+  async getOrders(@CurrentUser() userId: User) {}
 }

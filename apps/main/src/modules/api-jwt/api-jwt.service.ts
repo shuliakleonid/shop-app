@@ -4,6 +4,7 @@ import { AccessTokenDataType, TokensType } from '../auth/application/types/types
 import { SessionDto } from '../sessions/application/dto/session.dto';
 import { ConfigType } from '@nestjs/config';
 import jwtConfig from '@common/modules/api-config/jwt.config';
+import { RoleTitle } from '@prisma/client';
 
 @Injectable()
 export class ApiJwtService {
@@ -12,13 +13,16 @@ export class ApiJwtService {
     @Inject(jwtConfig.KEY) private jwtTokenConfig: ConfigType<typeof jwtConfig>,
   ) {}
 
-  async createJWT(customerId: number, deviceId: number): Promise<TokensType> {
+  async createJWT(userId: number, deviceId: number, roles: RoleTitle[]): Promise<TokensType> {
     const secretRT = this.jwtTokenConfig.REFRESH_TOKEN_SECRET;
     const expiresInRT = this.jwtTokenConfig.EXPIRED_REFRESH;
     const expiresInAc = this.jwtTokenConfig.EXPIRED_ACCESS;
 
-    const accessToken = this.jwtService.sign({ customerId, deviceId }, { expiresIn: expiresInAc });
-    const refreshToken = this.jwtService.sign({ customerId, deviceId }, { secret: secretRT, expiresIn: expiresInRT });
+    const accessToken = this.jwtService.sign({ userId: userId, deviceId, roles }, { expiresIn: expiresInAc });
+    const refreshToken = this.jwtService.sign(
+      { userId: userId, deviceId, roles },
+      { secret: secretRT, expiresIn: expiresInRT },
+    );
 
     return { accessToken, refreshToken };
   }

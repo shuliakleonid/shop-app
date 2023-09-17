@@ -18,11 +18,14 @@ export class AuthService {
     private readonly customerRepository: UserRepository,
   ) {}
 
-  async checkCredentialsOfCustomer(dto: LoginInputDto): Promise<number | null> {
+  async checkCredentialsOfCustomer(dto: LoginInputDto): Promise<{ id: number; roleId: number } | null> {
     const foundCustomer = await this.customerRepository.findByEmail(dto.email);
 
     if (!foundCustomer || !(await this.passwordIsCorrect(dto.password, foundCustomer.password))) return null;
-    return foundCustomer.id;
+    return {
+      id: foundCustomer.id,
+      roleId: foundCustomer.roleId,
+    };
   }
 
   private async passwordIsCorrect(password: string, passwordHash: string) {
@@ -35,10 +38,10 @@ export class AuthService {
   }
 
   async loginUser(command: LoginCommand): Promise<TokensType> {
-    const { customerId, deviceName, ip } = command;
+    const { user, deviceName, ip } = command;
 
     let session = await this.sessionsRepository.newDeviceId();
-    const tokens = await this.apiJwtService.createJWT(customerId, session.deviceId);
+    const tokens = await this.apiJwtService.createJWT(user.userId, session.deviceId, user.roles);
     const refreshTokenData = await this.apiJwtService.getRefreshTokenData(tokens.refreshToken);
 
     session = SessionEntity.initCreate({ ...refreshTokenData, ip, deviceName });
