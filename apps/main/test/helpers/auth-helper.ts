@@ -88,8 +88,6 @@ export class AuthHelper {
     addCookie = false,
   ): Promise<any> {
     await this.registrationUser(command, { expectedCode: 204 });
-    let confirmationCode: string;
-    const command2 = { confirmationCode: confirmationCode };
     let refreshToken: string;
     const command3 = { password: command.password, email: command.email };
     const response = await this.login(command3, { expectedCode: 200 });

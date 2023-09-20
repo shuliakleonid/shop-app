@@ -9,6 +9,10 @@ export class UserQueryRepository {
     return this.prisma.user.findFirst({ where: { id } });
   }
 
+  async findRoles() {
+    return this.prisma.role.findMany();
+  }
+
   getAllCustomers() {
     return 'all customer';
   }

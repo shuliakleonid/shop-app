@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { PrismaService } from '@common/modules/prisma/prisma.service';
+import { PrismaService } from '../../../../../../libs/common/src/modules/prisma/prisma.service';
 import { RoleEntity } from '@main/modules/user/domain/role.entity';
+import { RoleTitle } from '@prisma/client';
 
 @Injectable()
 export class RoleRepository {
@@ -12,5 +13,22 @@ export class RoleRepository {
     });
 
     return role;
+  }
+
+  async getRoleByName(name: RoleTitle): Promise<RoleEntity | null> {
+    const role = await this.prisma.role.findFirst({
+      where: { name },
+    });
+    return role;
+  }
+
+  async save(role: RoleEntity) {
+    await this.prisma.role.create({
+      data: {
+        code: role.code,
+        name: role.name,
+        description: role.description || 'Some description',
+      },
+    });
   }
 }
