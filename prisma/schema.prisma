@@ -18,7 +18,7 @@ model User {
   role      Role      @relation(fields: [roleId], references: [code])
   sessions  Session[]
 
-  @@map("users")
+  @@map("user")
 }
 
 model Session {
@@ -30,7 +30,7 @@ model Session {
   iat        Int?
   customer   User?   @relation(fields: [userId], references: [id])
 
-  @@map("sessions")
+  @@map("session")
 }
 
 enum RoleTitle {

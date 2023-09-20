@@ -45,8 +45,9 @@ import { RoleTitle } from '@prisma/client';
 export class AuthController {
   constructor(private readonly commandBus: CommandBus, private readonly customerQueryRepository: UserQueryRepository) {}
 
-  @SwaggerDecoratorsByRegistration()
   @Post('registration')
+  @SwaggerDecoratorsByRegistration()
+  @SetMetadata('isPublic', true)
   @HttpCode(HttpStatus.NO_CONTENT)
   async registration(@Body() body: RegisterInputDto) {
     const notification = await this.commandBus.execute<RegisterUserCommand, ResultNotification<null>>(

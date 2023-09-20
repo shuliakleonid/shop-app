@@ -1,11 +1,11 @@
 import { Test, TestingModuleBuilder } from '@nestjs/testing';
-import { AppModule } from '@main/app.module';
+import { AppModule } from '../../src/app.module';
 import { DataSource } from 'typeorm';
 import { PrismaClient } from '@prisma/client';
 import { truncateDBTablesPrisma } from './truncateDBTablesPrisma';
 import { truncateDBTablesTypeOrm } from './truncateDBTablesTypeOrm';
 import { defaultE2ETestingOptions, E2ETestingOptions, providersToMock } from './providersToMock';
-import { baseAppConfig } from '@common/configuration/app.config';
+import { baseAppConfig } from '../../../../libs/common/src/configuration/app.config';
 
 const prisma = new PrismaClient();
 
