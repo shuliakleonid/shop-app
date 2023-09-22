@@ -7,6 +7,11 @@ import { RoleTitle } from '@prisma/client';
 import { RoleRepository } from '@main/modules/user/infrastructure/role.repository';
 import { RoleEntity } from '@main/modules/user/domain/role.entity';
 
+export enum USER_ROLE {
+  CUSTOMER = 1,
+  ADMINISTRATOR,
+}
+
 export class CreateRoleCommand {
   constructor(public readonly dto: CreateRoleDto) {}
 }
@@ -24,7 +29,7 @@ export class CreateRoleHandler
     const { name, description } = command.dto;
     await this.validateRole(name);
 
-    const role = RoleEntity.initCreateRole(name, description);
+    const role = RoleEntity.initCreateRole(name, description, USER_ROLE.ADMINISTRATOR);
     await this.roleRepository.save(role);
   }
 

@@ -19,8 +19,9 @@ export class UserEntity extends BaseDateEntity implements User {
     super();
   }
 
-  static initCreateUser(userName: string, email: string, password: string): UserEntity {
+  static initCreateUser(userName: string, email: string, password: string, code: number): UserEntity {
     const instanceUser = new UserEntity();
+    instanceUser.roleId = code;
     instanceUser.userName = userName;
     instanceUser.email = email.toLowerCase();
     instanceUser.password = password;

@@ -39,6 +39,7 @@ import { JwtAuthGuard } from './guards/jwt-auth.guard';
 import { UpdateTokensCommand } from '@main/modules/auth/application/use-cases/update-tokens.handler';
 import { CurrentUser } from '@common/decorators/user.decorator';
 import { RoleTitle } from '@prisma/client';
+import { UserEntity } from '@main/modules/user/domain/user.entity';
 
 @ApiTags('Auth')
 @Controller('auth')
@@ -110,9 +111,9 @@ export class AuthController {
   @SwaggerDecoratorsByMe()
   @Get('me')
   @UseGuards(JwtAuthGuard)
-  async getMyInfo(@CurrentUser() userId: number): Promise<MeViewDto> {
-    const user = await this.customerQueryRepository.findUserById(userId);
-    if (!user) return;
-    return new MeViewDto(user);
+  async getMyInfo(@CurrentUser() user: UserEntity): Promise<MeViewDto> {
+    const currentUser = await this.customerQueryRepository.findUserById(user.id);
+    if (!currentUser) return;
+    return new MeViewDto(currentUser);
   }
 }

@@ -29,12 +29,12 @@ export class RegisterUserHandler
 
   async executeHandler(command: RegisterUserCommand) {
     const { userName, email, password } = command.userInputModel;
-
+    let role: RoleEntity;
     const foundCustomer = await this.customerRepository.findByEmail(email);
-    const roles = await this.roleRepository.getRoleByName(RoleTitle.CUSTOMER);
+    role = await this.roleRepository.getRoleByName(RoleTitle.CUSTOMER);
 
-    if (!roles) {
-      const role = RoleEntity.initCreateRole(RoleTitle.CUSTOMER);
+    if (!role) {
+      role = RoleEntity.initCreateRole(RoleTitle.CUSTOMER);
       await this.roleRepository.save(role);
     }
 
@@ -43,7 +43,7 @@ export class RegisterUserHandler
     }
 
     const passwordHash = await this.authService.getPasswordHash(password);
-    const user = UserEntity.initCreateUser(userName, email, passwordHash);
+    const user = UserEntity.initCreateUser(userName, email, passwordHash, role.code);
 
     await this.customerRepository.save(user);
   }
