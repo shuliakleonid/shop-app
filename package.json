@@ -143,7 +143,10 @@
     "testEnvironment": "node",
     "moduleNameMapper": {
       "^@main(|/.*)$": "<rootDir>/apps/main/src/$1",
-      "^@common/(.*)$": "<rootDir>/libs/common/src/$1"
+      "^@common/(.*)$": "<rootDir>/libs/common/src/$1",
+      "^@orders(|/.*)$": "<rootDir>/apps/orders/src/$1",
+      "^@shopping-cart(|/.*)$": "<rootDir>/apps/shopping-cart/src/$1",
+      "^@catalog(|/.*)$": "<rootDir>/apps/catalog/src/$1"
     }
   },
   "prisma": {

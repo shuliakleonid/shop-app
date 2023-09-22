@@ -19,6 +19,6 @@ const userCases = [AddProductToCartHandler, UpdateProductInCartHandler, DeletePr
 @Module({
   imports: [AuthModule, CqrsModule, DatabaseModule, TypeOrmModule.forFeature([CartItem, Product, Category])],
   controllers: [CartController],
-  providers: [CartItemRepository, ProductsRepository, CartItemQueryRepository, ...userCases],
+  providers: [CartItemRepository, , ProductsRepository, CartItemQueryRepository, ...userCases],
 })
 export class CartItemModule {}

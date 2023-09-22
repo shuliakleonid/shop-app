@@ -5,6 +5,7 @@ import { PaymentStripeService } from '../../../payment-stripe/application/paymen
 import { OrdersQueryRepository } from '@orders/modules/orders/infrastructure/orders.query-repository';
 import { NotificationException } from '@common/validators/result-notification';
 import { NotificationCode } from '@common/configuration/notificationCode';
+import { CartItemQueryRepository } from '@shopping-cart/modules/cart-item/infrastructure/cart-item.query-repository';
 
 export class CreatePaymentOrderCommand {
   constructor(public readonly customerId: number, public readonly paymentOrder: CreatePaymentOrderDto) {}
@@ -18,6 +19,7 @@ export class CreatePaymentOrderHandler
   constructor(
     private readonly paymentStripeService: PaymentStripeService,
     private readonly orderQueryRepository: OrdersQueryRepository,
+    private readonly cartItemQueryRepository: CartItemQueryRepository,
   ) {
     super();
   }
@@ -25,7 +27,7 @@ export class CreatePaymentOrderHandler
   async executeHandler(command: CreatePaymentOrderCommand) {
     const { customerId, paymentOrder } = command;
     const order = await this.validateOrder(paymentOrder.orderId, customerId);
-    // const allProductsInOrder = await this.cartItemQueryRepository.findAllProductsInOrder(order.id);
+    const totalAmount = await this.cartItemQueryRepository.findAllProductsInOrder(order.id);
 
     // await this.paymentStripeService.createPaymentSession({
     //   customerId,
@@ -34,9 +36,9 @@ export class CreatePaymentOrderHandler
     // });
 
     const { url } = await this.paymentStripeService.createPaymentSession({
-      customerId: 1,
-      totalAmount: 1000,
-      orderId: 12,
+      customerId,
+      totalAmount,
+      orderId: order.id,
     });
 
     return { url };

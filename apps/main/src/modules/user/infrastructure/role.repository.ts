@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { PrismaService } from '../../../../../../libs/common/src/modules/prisma/prisma.service';
+import { PrismaService } from '@common/modules/prisma/prisma.service';
 import { RoleEntity } from '@main/modules/user/domain/role.entity';
 import { RoleTitle } from '@prisma/client';
 
@@ -25,9 +25,8 @@ export class RoleRepository {
   async save(role: RoleEntity) {
     await this.prisma.role.create({
       data: {
-        code: role.code,
         name: role.name,
-        description: role.description || 'Some description',
+        description: role.description,
       },
     });
   }

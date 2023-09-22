@@ -4,12 +4,12 @@ export class RoleEntity implements Role {
   id: number;
   code: number;
   name: RoleTitle;
-  description: string;
+  description: string | null;
 
-  static initCreateRole(name: RoleTitle): RoleEntity {
+  static initCreateRole(name: RoleTitle, description?: string): RoleEntity {
     const role = new RoleEntity();
-    role.code = 1;
     role.name = name;
+    role.description = description || null;
     return role;
   }
 }

@@ -31,6 +31,7 @@ export class CartController {
     private readonly commandBus: CommandBus,
     private readonly cartItemQueryRepository: CartItemQueryRepository,
   ) {}
+
   @UseRoles({
     resource: 'customerData',
     action: 'read',

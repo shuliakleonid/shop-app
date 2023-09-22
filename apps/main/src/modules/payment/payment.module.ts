@@ -11,6 +11,11 @@ import { StripePaymentWebhookService } from '../payment-stripe/application/strip
 import { KafkaModule } from '@common/modules/kafka/kafka.module';
 import { ConfigModule } from '@nestjs/config';
 import stripe from '@common/modules/api-config/stripe.config';
+import { CartItemQueryRepository } from '@shopping-cart/modules/cart-item/infrastructure/cart-item.query-repository';
+import { CartItemRepository } from '@shopping-cart/modules/cart-item/infrastructure/cart-item.repository';
+import { CartItem } from '@shopping-cart/modules/cart-item/domain/cart-item.entity';
+import { Product } from '@catalog/modules/products/domain/product.entity';
+import { Category } from '@catalog/modules/categories/domain/category.entity';
 
 const useCases = [CreatePaymentOrderHandler];
 
@@ -21,11 +26,18 @@ const useCases = [CreatePaymentOrderHandler];
     }),
     CqrsModule,
     DatabaseModule,
-    TypeOrmModule.forFeature([OrderDetails]),
+    TypeOrmModule.forFeature([OrderDetails, CartItem, Product, Category]),
     KafkaModule,
   ],
   controllers: [PaymentStripeController],
-  providers: [PaymentStripeService, OrdersQueryRepository, StripePaymentWebhookService, ...useCases],
+  providers: [
+    PaymentStripeService,
+    OrdersQueryRepository,
+    StripePaymentWebhookService,
+    CartItemQueryRepository,
+    CartItemRepository,
+    ...useCases,
+  ],
   exports: [],
 })
 export class PaymentModule {}

@@ -5,7 +5,6 @@ import { JwtAuthGuard } from '@main/modules/auth/api/guards/jwt-auth.guard';
 
 @Controller('customer')
 @UseGuards(JwtAuthGuard)
-
 export class UserController {
   constructor(private readonly customerQueryRepository: UserQueryRepository) {}
   @UseRoles({

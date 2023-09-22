@@ -40,9 +40,9 @@ enum RoleTitle {
 
 model Role {
   id          Int       @id @default(autoincrement())
-  code        Int       @unique
+  code        Int       @unique @default(autoincrement())
   name        RoleTitle @default(CUSTOMER)
-  description String
+  description String?
   users       User[]
 
   @@map("role")

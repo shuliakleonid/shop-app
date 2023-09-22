@@ -26,4 +26,8 @@ export class UserEntity extends BaseDateEntity implements User {
     instanceUser.password = password;
     return instanceUser;
   }
+
+  assignRole(user: UserEntity, roleId: number) {
+    user.roleId = roleId;
+  }
 }
