@@ -1,10 +1,8 @@
-import { Controller, Get, Param, ParseIntPipe, UseGuards } from '@nestjs/common';
+import { Controller, Get, Param, ParseIntPipe } from '@nestjs/common';
 import { ProductsQueryRepository } from '../infrastructure/products.query-repository';
-import { JwtAuthGuard } from '@main/modules/auth/api/guards/jwt-auth.guard';
 import { UseRoles } from 'nest-access-control';
 
 @Controller('products')
-@UseGuards(JwtAuthGuard)
 export class PublicProductsController {
   constructor(private readonly productQueryRepository: ProductsQueryRepository) {}
 

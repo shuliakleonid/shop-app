@@ -18,10 +18,8 @@ import { UpdateProductDto } from './dtos/request/update-product.dto';
 import { UpdateProductsCommand } from '../application/use-cases/update-products.handler';
 import { DeleteProductsCommand } from '../application/use-cases/delete-products.handler';
 import { UseRoles } from 'nest-access-control';
-import { JwtAuthGuard } from '@main/modules/auth/api/guards/jwt-auth.guard';
 
 @Controller('products')
-@UseGuards(JwtAuthGuard)
 export class ProductsController {
   constructor(private readonly commandBus: CommandBus) {}
 

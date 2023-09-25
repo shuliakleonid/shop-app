@@ -98,11 +98,13 @@ describe('Testing product flow   -  e2e', () => {
       roleName: RoleTitle.ADMINISTRATOR,
       userId: 2,
     };
-    await userHelper.assignNewRole(command, {
+    const { body, refreshToken } = await userHelper.assignNewRole(command, {
       expectedCode: HttpStatus.CREATED,
       accessToken: accessToken2,
       refreshToken: refreshToken2,
     });
+
+    refreshToken2 = refreshToken;
   });
 
   it('06 - / (POST) - should create 10 PRODUCTS by ADMIN', async () => {
