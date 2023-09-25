@@ -74,7 +74,7 @@ export class AuthController {
       new LoginCommand(user, ip, deviceName),
     );
     const { accessToken, refreshToken } = notification.getData();
-    res.cookie('refreshToken', refreshToken, { httpOnly: true, secure: true, sameSite: 'none' });
+    res.cookie('refreshToken', refreshToken, { httpOnly: true, secure: false, sameSite: 'none' });
     return { accessToken };
   }
 
@@ -103,7 +103,7 @@ export class AuthController {
     );
 
     const { accessToken, refreshToken } = notification.getData();
-    res.cookie('refreshToken', refreshToken, { httpOnly: true, secure: true, sameSite: 'none' });
+    res.cookie('refreshToken', refreshToken, { httpOnly: true, secure: false, sameSite: 'none' });
 
     return { accessToken };
   }

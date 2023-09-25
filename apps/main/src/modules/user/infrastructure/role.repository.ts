@@ -27,6 +27,7 @@ export class RoleRepository {
       data: {
         name: role.name,
         description: role.description,
+        code: role.code,
       },
     });
   }

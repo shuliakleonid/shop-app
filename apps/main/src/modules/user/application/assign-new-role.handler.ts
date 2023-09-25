@@ -25,9 +25,9 @@ export class AssignNewRoleHandler
     const user = await this.validateUser(userId);
     const role = await this.validateRole(roleName);
 
-    user.assignRole(user, role.id);
+    // user.assignRole(user, role.id);
 
-    await this.userRepository.save(user);
+    await this.userRepository.update(user.id, role.id);
   }
 
   private async validateUser(userId: number): Promise<UserEntity> {

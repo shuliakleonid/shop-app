@@ -27,6 +27,16 @@ export class ApiJwtService {
     return { accessToken, refreshToken };
   }
 
+  async createSessionJWTToken(userId: number, deviceId: number, roles: RoleTitle[]) {
+    const secretRT = this.jwtTokenConfig.REFRESH_TOKEN_SECRET;
+    const expiresInRT = this.jwtTokenConfig.EXPIRED_REFRESH;
+    const refreshToken = this.jwtService.sign(
+      { userId: userId, deviceId, roles },
+      { secret: secretRT, expiresIn: expiresInRT },
+    );
+    return refreshToken;
+  }
+
   async getRefreshTokenData(refreshToken: string): Promise<SessionDto | null> {
     try {
       const secretRT = this.jwtTokenConfig.REFRESH_TOKEN_SECRET;

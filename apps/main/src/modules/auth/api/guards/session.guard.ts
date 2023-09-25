@@ -18,7 +18,9 @@ export class SessionGuard implements CanActivate {
     if (isPublicRoute) return true;
 
     const req = context.switchToHttp().getRequest<Request>();
-    const sessionData = await this.apiJwtService.getRefreshTokenData(req.cookies.refreshToken);
+    const sessionData = await this.apiJwtService.getRefreshTokenData(
+      req?.cookies?.refreshToken || req?.headers.cookie.split(';')[0].split('=')[1],
+    );
     if (!sessionData) throw new UnauthorizedException();
 
     const foundSession = await this.securityRepository.findSessionByDeviceId(sessionData.deviceId);

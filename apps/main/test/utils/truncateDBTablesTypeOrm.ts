@@ -4,6 +4,6 @@ export async function truncateDBTablesTypeOrm(connection: DataSource): Promise<v
   const entities = connection.entityMetadatas;
   for (const entity of entities) {
     const repository = connection.getRepository(entity.name);
-    await repository.query(`TRUNCATE TABLE "${entity.tableName}" CASCADE;`);
+    await repository.query(`TRUNCATE TABLE "${entity.tableName}" RESTART IDENTITY CASCADE;`);
   }
 }

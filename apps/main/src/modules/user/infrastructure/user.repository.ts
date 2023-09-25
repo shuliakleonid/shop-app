@@ -39,4 +39,11 @@ export class UserRepository {
     });
     return plainToInstance(UserEntity, user);
   }
+
+  async update(userId: number, roleId: number) {
+    await this.prisma.user.update({
+      where: { id: userId },
+      data: { roleId },
+    });
+  }
 }
