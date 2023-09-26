@@ -14,6 +14,7 @@ RBAC_POLICY
   .update('customerData')
   .delete('customerData')
   .grant(Role.ADMINISTRATOR)
+  .extend(Role.CUSTOMER)
   .read('adminData')
   .create('adminData')
   .update('adminData')

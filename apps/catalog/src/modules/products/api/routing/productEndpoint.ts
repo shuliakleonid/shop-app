@@ -6,5 +6,4 @@ export const productRoutes = {
   create: () => `${baseUrlProduct}`,
   update: id => `${baseUrlProduct}/${id}`,
   delete: id => `${baseUrlProduct}/${id}`,
-  getProduct: id => `${baseUrlProduct}/${id}`,
 };

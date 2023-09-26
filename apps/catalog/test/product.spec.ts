@@ -98,7 +98,7 @@ describe('Testing product flow   -  e2e', () => {
       roleName: RoleTitle.ADMINISTRATOR,
       userId: 2,
     };
-    const { body, refreshToken } = await userHelper.assignNewRole(command, {
+    const { refreshToken } = await userHelper.assignNewRole(command, {
       expectedCode: HttpStatus.CREATED,
       accessToken: accessToken2,
       refreshToken: refreshToken2,
@@ -107,20 +107,112 @@ describe('Testing product flow   -  e2e', () => {
     refreshToken2 = refreshToken;
   });
 
-  it('06 - / (POST) - should create 10 PRODUCTS by ADMIN', async () => {
+  it('07 - / (POST) - should create 10 PRODUCTS by ADMIN', async () => {
     await authHelper.login({ password: '12345678', email: correctEmail_second_user }, { expectedCode: 200 });
-    const createProductDto: CreateProductDto = {
-      name: faker.commerce.productName(),
-      description: faker.lorem.sentence(),
-      price: faker.number.int({ min: 10, max: 1000 }),
-      categoryId: 1,
-    };
     for (let i = 0; i < 10; i++) {
+      const createProductDto: CreateProductDto = {
+        name: faker.commerce.productName(),
+        description: faker.lorem.sentence(),
+        price: faker.number.int({ min: 10, max: 1000 }),
+        categoryId: 1,
+      };
       await productHelper.createProduct(createProductDto, {
         expectedCode: HttpStatus.CREATED,
         accessToken: accessToken2,
         refreshToken: refreshToken2,
       });
     }
+  });
+
+  it('08 - / (GET) - should return a list of products by ADMINISTRATOR', async () => {
+    const products = await productHelper.getAllProducts({
+      expectedCode: HttpStatus.OK,
+      accessToken: accessToken2,
+      refreshToken: refreshToken2,
+    });
+
+    expect(Array.isArray(products)).toBe(true);
+    expect(products.length).toBeGreaterThan(0);
+  });
+
+  it('09 - / (GET) - should return a list of products by CUSTOMER', async () => {
+    const products = await productHelper.getAllProducts({
+      expectedCode: HttpStatus.OK,
+      accessToken: accessToken,
+      refreshToken: refreshToken,
+    });
+
+    expect(Array.isArray(products)).toBe(true);
+    expect(products.length).toBeGreaterThan(0);
+  });
+
+  it('10 - / (GET) - should return a specific product by ID by ADMINISTRATOR', async () => {
+    const productId = 1;
+    const products = await productHelper.getProductById(productId, {
+      expectedCode: HttpStatus.OK,
+      accessToken: accessToken2,
+      refreshToken: refreshToken2,
+    });
+    expect(products).toBeDefined();
+  });
+
+  it('11 - / (GET) - should return a specific product by ID by CUSTOMER', async () => {
+    const productId = 1;
+    const product = await productHelper.getProductById(productId, {
+      expectedCode: HttpStatus.OK,
+      accessToken: accessToken2,
+      refreshToken: refreshToken2,
+    });
+    expect(product).toBeDefined();
+  });
+
+  it('12 - / (PUT) - should update a product by ID', async () => {
+    const productId = 1;
+    const updatedProductDto = {
+      id: productId,
+      name: 'Updated Product Name',
+      description: 'Updated Product Description',
+      price: 200,
+      quantity: 20,
+    };
+    await productHelper.updateProduct(updatedProductDto, {
+      expectedCode: HttpStatus.OK,
+      accessToken: accessToken2,
+      refreshToken: refreshToken2,
+    });
+  });
+
+  it('13 - / (PUT) - should return 403 when customer try update a product by ID by CUSTOMER', async () => {
+    const productId = 1;
+    const updatedProductDto = {
+      id: productId,
+      name: 'Updated Product Name',
+      description: 'Updated Product Description',
+      price: 200,
+      quantity: 20,
+    };
+    await productHelper.updateProduct(updatedProductDto, {
+      expectedCode: HttpStatus.FORBIDDEN,
+      accessToken: accessToken,
+      refreshToken: refreshToken,
+    });
+  });
+
+  it('14 - / (DELETE) - should delete a product by ID by ADMINISTRATOR', async () => {
+    const productId = 1;
+    await productHelper.deleteProduct(productId, {
+      expectedCode: HttpStatus.OK,
+      accessToken: accessToken2,
+      refreshToken: refreshToken2,
+    });
+  });
+
+  it('15 - / (DELETE) - should return 403 when customer try delete a product by ID by CUSTOMER', async () => {
+    const productId = 2;
+    await productHelper.deleteProduct(productId, {
+      expectedCode: HttpStatus.FORBIDDEN,
+      accessToken: accessToken,
+      refreshToken: refreshToken,
+    });
   });
 });
