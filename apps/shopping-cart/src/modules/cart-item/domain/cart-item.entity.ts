@@ -14,7 +14,7 @@ export class CartItem {
   @UpdateDateColumn({ type: 'timestamp' })
   updateDate: Date;
 
-  @Column()
+  @Column({ nullable: true })
   orderId: number;
 
   @Column()

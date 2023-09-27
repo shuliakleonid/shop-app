@@ -25,7 +25,6 @@ import { CartDto } from './dtos/response/cart.dto';
 import { UseRoles } from 'nest-access-control';
 
 @Controller('cart')
-@UseGuards(JwtAuthGuard)
 export class CartController {
   constructor(
     private readonly commandBus: CommandBus,
@@ -38,8 +37,8 @@ export class CartController {
     possession: 'any',
   })
   @Get()
-  async getCart(@CurrentUser() customerId: number) {
-    const cartItems = await this.cartItemQueryRepository.getCustomerCartItems(customerId);
+  async getCart(@CurrentUser() customer) {
+    const cartItems = await this.cartItemQueryRepository.getCustomerCartItems(customer.userId);
     return new CartDto(cartItems);
   }
 
@@ -50,9 +49,9 @@ export class CartController {
   })
   @Post()
   @HttpCode(HttpStatus.CREATED)
-  async addProductToCart(@Body() body: AddProductToCartDto, @CurrentUser() customerId: number) {
+  async addProductToCart(@Body() body: AddProductToCartDto, @CurrentUser() customer) {
     const notification = await this.commandBus.execute<AddProductToCartCommand, ResultNotification<null>>(
-      new AddProductToCartCommand({ ...body, customerId }),
+      new AddProductToCartCommand({ ...body, customerId: customer.userId }),
     );
     notification.getCode();
   }
@@ -64,9 +63,9 @@ export class CartController {
   })
   @Put()
   @HttpCode(HttpStatus.OK)
-  async updateProductInCart(@Body() body: UpdateCartDto, @CurrentUser() customerId: number) {
+  async updateProductInCart(@Body() body: UpdateCartDto, @CurrentUser() customer) {
     const notification = await this.commandBus.execute<UpdateProductInCartCommand, ResultNotification<null>>(
-      new UpdateProductInCartCommand({ ...body, customerId }),
+      new UpdateProductInCartCommand({ ...body, customerId: customer.userId }),
     );
     notification.getCode();
   }
@@ -77,12 +76,12 @@ export class CartController {
     possession: 'any',
   })
   @Delete('/:productId')
-  @HttpCode(HttpStatus.OK)
-  async removeProductFromCart(@Param('productId', ParseIntPipe) productId: number, @CurrentUser() customerId: number) {
+  @HttpCode(HttpStatus.NO_CONTENT)
+  async removeProductFromCart(@Param('productId', ParseIntPipe) productId: number, @CurrentUser() customer) {
     const notification = await this.commandBus.execute<DeleteProductFromCartCommand, ResultNotification<null>>(
       new DeleteProductFromCartCommand({
         productId,
-        customerId,
+        customerId: customer.userId,
       }),
     );
     notification.getCode();

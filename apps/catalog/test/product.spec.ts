@@ -47,7 +47,6 @@ describe('Testing product flow   -  e2e', () => {
   let refreshToken: string;
   let refreshToken2: string;
 
-  // Registration and login 2 users
   it('01 - / (POST) - should create user and returned accessToken', async () => {
     const command = { password: '12345678', email: correctEmail_first_user, userName: correctUserName_first_user };
     const command2 = { password: '12345678', email: correctEmail_second_user, userName: correctUserName_second_user };

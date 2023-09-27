@@ -21,6 +21,5 @@ export class CartItemRepository {
 
   async findOneByProduct(productId: number, customerId: number) {
     return await this.cartItemRepository.findOneBy({ productId, customerId });
-    return null;
   }
 }

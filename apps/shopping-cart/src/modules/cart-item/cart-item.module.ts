@@ -17,8 +17,8 @@ import { CartItemQueryRepository } from './infrastructure/cart-item.query-reposi
 const userCases = [AddProductToCartHandler, UpdateProductInCartHandler, DeleteProductFromCartHandler];
 
 @Module({
-  imports: [AuthModule, CqrsModule, DatabaseModule, TypeOrmModule.forFeature([CartItem, Product, Category])],
+  imports: [CqrsModule, DatabaseModule, TypeOrmModule.forFeature([CartItem, Product, Category])],
   controllers: [CartController],
-  providers: [CartItemRepository, , ProductsRepository, CartItemQueryRepository, ...userCases],
+  providers: [CartItemRepository, ProductsRepository, CartItemQueryRepository, ...userCases],
 })
 export class CartItemModule {}

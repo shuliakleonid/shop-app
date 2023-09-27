@@ -1,4 +1,4 @@
-import { MiddlewareConsumer, Module } from '@nestjs/common';
+import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { PrismaModule } from '@common/modules/prisma/prisma.module';
@@ -37,8 +37,4 @@ import jwtConfig from '@common/modules/api-config/jwt.config';
     SessionsRepository,
   ],
 })
-export class AppModule {
-  configure(consumer: MiddlewareConsumer) {
-    consumer.apply().forRoutes('*');
-  }
-}
+export class AppModule {}
