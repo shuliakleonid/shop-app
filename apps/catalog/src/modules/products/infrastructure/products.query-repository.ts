@@ -13,4 +13,13 @@ export class ProductsQueryRepository {
   async findById(id: number) {
     return this.productRepository.findOneBy({ id });
   }
+
+  async getTotalPrice(productsIds: number[]) {
+    const products = await this.productRepository
+      .createQueryBuilder('product')
+      .where('product.id IN (:...ids)', { ids: productsIds })
+      .getMany();
+
+    return products.reduce((acc, product) => acc + product.price, 0);
+  }
 }

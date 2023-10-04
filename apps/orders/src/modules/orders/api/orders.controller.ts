@@ -21,11 +21,9 @@ import { CurrentUser } from '@common/decorators/user.decorator';
 import { UpdateOrderCommand } from '../application/use-cases/update-order.handler';
 import { DeleteOrderCommand } from '../application/use-cases/delete-order.handler';
 import { OrdersQueryRepository } from '../infrastructure/orders.query-repository';
-import { JwtAuthGuard } from '@main/modules/auth/api/guards/jwt-auth.guard';
 import { UseRoles } from 'nest-access-control';
 
 @Controller('orders')
-@UseGuards(JwtAuthGuard)
 export class OrdersController {
   constructor(private readonly commandBus: CommandBus, private readonly orderQueryRepository: OrdersQueryRepository) {}
 

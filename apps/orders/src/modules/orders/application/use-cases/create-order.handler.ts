@@ -3,6 +3,9 @@ import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { BaseNotificationHandler } from '@common/main/use-cases/base-notification.use-case';
 import { OrdersRepository } from '../../infrastructure/orders.repository';
 import { ProducerService } from '@common/modules/kafka/producer.service';
+import { OrderDetails } from '@orders/modules/orders/domain/order-details.entity';
+import { ProductsRepository } from '@catalog/modules/products/infrastructure/products.repository';
+import { ProductsQueryRepository } from '@catalog/modules/products/infrastructure/products.query-repository';
 
 export class CreateOrderCommand {
   constructor(public readonly createOrder: { orders: CreateOrderDto[]; customerId: number }) {}
@@ -13,7 +16,11 @@ export class CreateOrderHandler
   extends BaseNotificationHandler<CreateOrderCommand, void>
   implements ICommandHandler<CreateOrderCommand>
 {
-  constructor(private readonly orderRepository: OrdersRepository, private readonly _kafka: ProducerService) {
+  constructor(
+    private readonly orderRepository: OrdersRepository,
+    private readonly productQueryRepository: ProductsQueryRepository,
+    private readonly _kafka: ProducerService,
+  ) {
     super();
   }
 
@@ -21,7 +28,15 @@ export class CreateOrderHandler
     await this.create();
     const { orders, customerId } = command.createOrder;
 
-    // const orderEntity = OrderDetails.create({customerId:,total: , paimentId})
+    const productsIds = orders.reduce((acc, val) => {
+      acc.push(val.productId);
+      return acc;
+    }, [] as number[]);
+
+    const totalSum = await this.productQueryRepository.getTotalPrice(productsIds);
+    //@ts-ignore
+    return totalSum;
+    // const orderEntity = OrderDetails.create({ customerId, total:, paimentId });
 
     // await this.orderRepository.save(orderEntity);
   }
