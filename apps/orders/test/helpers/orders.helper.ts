@@ -73,7 +73,7 @@ export class OrdersHelper {
   ) {
     const expectedCode = config.expectedCode ?? HttpStatus.NO_CONTENT;
     const response = await request(this.app.getHttpServer())
-      .put(ordersEndpoints.update('id'))
+      .put(ordersEndpoints.update('1'))
       .set('Authorization', `Bearer ${config.accessToken}`)
       .set('Cookie', `refreshToken=${config.refreshToken}`)
       .send(command)

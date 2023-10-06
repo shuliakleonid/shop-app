@@ -163,7 +163,11 @@ describe('Testing flow shopping cart  -  e2e', () => {
   });
 
   it('14 - / (POST) - should customer update order ', async () => {
-    const command = [{ productId: 1 }, { productId: 2 }];
+    const command = [{ productId: 1 }, { productId: 2 }, { productId: 3 }, { productId: 4 }];
     await orderHelper.updateOrder(command, { expectedCode: HttpStatus.CREATED, accessToken, refreshToken });
+  });
+
+  it('15 - / (POST) - should customer delete order ', async () => {
+    await orderHelper.deleteOrder(1, { expectedCode: HttpStatus.OK, accessToken, refreshToken });
   });
 });

@@ -25,7 +25,7 @@ export class UpdateOrderHandler
 
   async executeHandler(command: UpdateOrderCommand): Promise<void> {
     const { products, id } = command.dto;
-    const order = await this.OrderRepository.findById(id);
+    const order = await this.orderValidate(id);
     await this.validate(products);
 
     const productsIds = products.reduce((acc, val) => {
@@ -46,5 +46,12 @@ export class UpdateOrderHandler
     if (productsFound.length !== products.length) {
       throw new NotificationException(`Product not found`, 'product', NotificationCode.NOT_FOUND);
     }
+  }
+  private async orderValidate(id: number) {
+    const order = await this.OrderRepository.findById(id);
+    if (!order) {
+      throw new NotificationException(`Order not found`, 'order', NotificationCode.NOT_FOUND);
+    }
+    return order;
   }
 }

@@ -1,15 +1,4 @@
-import {
-  Body,
-  Controller,
-  Delete,
-  Get,
-  HttpCode,
-  HttpStatus,
-  Param,
-  ParseIntPipe,
-  Post,
-  Put,
-} from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, ParseIntPipe, Post, Put } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
 import { ResultNotification } from '@common/validators/result-notification';
 import { CreateOrderDto } from './dtos/request/create-order.dto';
@@ -45,7 +34,7 @@ export class OrdersController {
     possession: 'any',
   })
   @Put('/:id')
-  @HttpCode(HttpStatus.OK)
+  @HttpCode(HttpStatus.CREATED)
   async updateProduct(@Body() body: UpdateOrderDto[], @Param('id', ParseIntPipe) id: number) {
     const notification = await this.commandBus.execute<UpdateOrderCommand, ResultNotification<null>>(
       new UpdateOrderCommand({ products: body, id }),
@@ -60,7 +49,7 @@ export class OrdersController {
   })
   @Delete('/:id')
   @HttpCode(HttpStatus.OK)
-  async deleteProduct(@Param('id', ParseIntPipe) id: number) {
+  async deleteOrder(@Param('id', ParseIntPipe) id: number) {
     const notification = await this.commandBus.execute<DeleteOrderCommand, ResultNotification<null>>(
       new DeleteOrderCommand(id),
     );
