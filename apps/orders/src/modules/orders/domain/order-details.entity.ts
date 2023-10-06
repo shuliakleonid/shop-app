@@ -27,7 +27,7 @@ export class OrderDetails {
   @Column({ nullable: true })
   paymentId: number;
 
-  @Column()
+  @Column({ nullable: true })
   cartItemId: number;
 
   @CreateDateColumn({ type: 'timestamp' })
@@ -35,4 +35,20 @@ export class OrderDetails {
 
   @UpdateDateColumn({ type: 'timestamp' })
   updateDate: Date;
+
+  static create(param: { total: number; customerId: number }) {
+    const orderDetails = new OrderDetails();
+    orderDetails.id = null;
+    orderDetails.state = OrderState.PENDING;
+    orderDetails.paymentId = null;
+    orderDetails.cartItemId = null;
+    orderDetails.creationDate = new Date();
+    orderDetails.total = param.total;
+    orderDetails.customerId = param.customerId;
+    return orderDetails;
+  }
+
+  static update(order: OrderDetails, param: { total: number }) {
+    order.total = param.total;
+  }
 }

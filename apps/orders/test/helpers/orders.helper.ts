@@ -1,6 +1,7 @@
 import { INestApplication, HttpStatus } from '@nestjs/common';
 import request from 'supertest';
 import { ordersEndpoints } from '@orders/modules/orders/api/routing/orders.routing';
+import { CreateOrderDto } from '@orders/modules/orders/api/dtos/request/create-order.dto';
 
 export class OrdersHelper {
   constructor(private readonly app: INestApplication) {}
@@ -43,7 +44,7 @@ export class OrdersHelper {
   }
 
   async createOrder(
-    command,
+    command: CreateOrderDto[],
     config: {
       expectedBody?: any;
       expectedCode?: number;

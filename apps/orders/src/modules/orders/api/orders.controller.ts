@@ -9,7 +9,6 @@ import {
   ParseIntPipe,
   Post,
   Put,
-  UseGuards,
 } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
 import { ResultNotification } from '@common/validators/result-notification';
@@ -33,9 +32,9 @@ export class OrdersController {
     possession: 'any',
   })
   @Post()
-  async createOrder(@Body() body: CreateOrderDto[], @CurrentUser() customerId: number) {
+  async createOrder(@Body() body: CreateOrderDto[], @CurrentUser() customer) {
     const notification = await this.commandBus.execute<CreateOrderCommand, ResultNotification<null>>(
-      new CreateOrderCommand({ orders: body, customerId }),
+      new CreateOrderCommand({ orders: body, customerId: customer.userId }),
     );
     return notification.getCode();
   }
@@ -47,9 +46,9 @@ export class OrdersController {
   })
   @Put('/:id')
   @HttpCode(HttpStatus.OK)
-  async updateProduct(@Body() body: UpdateOrderDto, @Param('id', ParseIntPipe) id: number) {
+  async updateProduct(@Body() body: UpdateOrderDto[], @Param('id', ParseIntPipe) id: number) {
     const notification = await this.commandBus.execute<UpdateOrderCommand, ResultNotification<null>>(
-      new UpdateOrderCommand({ ...body, id }),
+      new UpdateOrderCommand({ products: body, id }),
     );
     notification.getCode();
   }

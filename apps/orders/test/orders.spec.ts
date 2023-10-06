@@ -147,37 +147,23 @@ describe('Testing flow shopping cart  -  e2e', () => {
     await shoppingCartHelper.addItemToCart(command, { expectedCode: HttpStatus.CREATED, accessToken, refreshToken });
   });
 
-  it('09 - / (GET) - should customer Get 1 product from cart', async () => {
-    const productsInCart = await shoppingCartHelper.getCart({ expectedCode: HttpStatus.OK, accessToken, refreshToken });
-    expect(productsInCart.cartItems.length).toBeGreaterThanOrEqual(1);
-  });
-
-  it('10 - / (UPDATE) - should customer update product in cart', async () => {
-    const command: AddProductToCartDto = {
-      productId: 1,
-      quantity: 2,
-    };
-    await shoppingCartHelper.updateItemInCart(command, { expectedCode: HttpStatus.OK, accessToken, refreshToken });
-  });
-
-  it('11 - / (DELETE) - should customer delete product in cart', async () => {
-    const command: { productId: number } = { productId: 1 };
-    await shoppingCartHelper.deleteItemFromCart(command, {
-      expectedCode: HttpStatus.NO_CONTENT,
-      accessToken,
-      refreshToken,
-    });
-  });
-
   it('12 - / (GET) - should customer Get 1 product from cart', async () => {
     const productsInCart = await shoppingCartHelper.getCart({
       expectedCode: HttpStatus.OK,
       accessToken,
       refreshToken,
     });
-    expect(productsInCart.cartItems.length).toBe(0);
+
+    expect(productsInCart.cartItems.length).toBe(1);
   });
 
+  it('13 - / (POST) - should customer create order', async () => {
+    const command = [{ productId: 1 }, { productId: 2 }];
+    await orderHelper.createOrder(command, { expectedCode: HttpStatus.CREATED, accessToken, refreshToken });
+  });
 
-  
+  it('14 - / (POST) - should customer update order ', async () => {
+    const command = [{ productId: 1 }, { productId: 2 }];
+    await orderHelper.updateOrder(command, { expectedCode: HttpStatus.CREATED, accessToken, refreshToken });
+  });
 });

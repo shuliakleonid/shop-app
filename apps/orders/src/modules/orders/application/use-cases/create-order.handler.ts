@@ -4,7 +4,6 @@ import { BaseNotificationHandler } from '@common/main/use-cases/base-notificatio
 import { OrdersRepository } from '../../infrastructure/orders.repository';
 import { ProducerService } from '@common/modules/kafka/producer.service';
 import { OrderDetails } from '@orders/modules/orders/domain/order-details.entity';
-import { ProductsRepository } from '@catalog/modules/products/infrastructure/products.repository';
 import { ProductsQueryRepository } from '@catalog/modules/products/infrastructure/products.query-repository';
 
 export class CreateOrderCommand {
@@ -34,11 +33,10 @@ export class CreateOrderHandler
     }, [] as number[]);
 
     const totalSum = await this.productQueryRepository.getTotalPrice(productsIds);
-    //@ts-ignore
-    return totalSum;
-    // const orderEntity = OrderDetails.create({ customerId, total:, paimentId });
 
-    // await this.orderRepository.save(orderEntity);
+    const orderEntity = OrderDetails.create({ customerId, total: totalSum });
+
+    await this.orderRepository.save(orderEntity);
   }
 
   async create() {
