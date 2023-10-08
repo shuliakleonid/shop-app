@@ -19,7 +19,7 @@ export class PaymentStripeService {
     const defaultParams = {
       mode: 'payment',
       payment_method_types: ['card'],
-      success_url: `${this.serverUrl}` + '/profile/settings/edit?success=true',
+      success_url: `${this.serverUrl}/profile/settings/edit?success=true`,
       cancel_url: `${this.serverUrl}/profile/settings/edit?success=false`,
       expires_at: Math.floor(Date.now() / 1000) + 30 * 60,
       line_items: [

@@ -1,7 +1,7 @@
 import { Controller, HttpCode, Post } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { StripePaymentWebhookService } from '../application/stripe-payment-webhook.service';
-import { PaymentInputData, Signature } from '../../../decorators/signature-data.decorator';
+import { PaymentInputData, Signature } from '@main/decorators/signature-data.decorator';
 
 @ApiTags('Payments')
 @Controller('payments')
