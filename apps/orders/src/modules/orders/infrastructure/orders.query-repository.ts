@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { OrderDetails } from '../domain/order-details.entity';
+import { OrderDetails, OrderState } from '../domain/order-details.entity';
 
 @Injectable()
 export class OrdersQueryRepository {
@@ -11,7 +11,7 @@ export class OrdersQueryRepository {
   }
 
   async findById(id: number) {
-    return this.orderRepository.findOneBy({ customerId: id });
+    return this.orderRepository.findOneBy({ customerId: id, state: OrderState.PENDING });
   }
 
   async findByOrderAndCustomerId(orderId: number, customerId: number) {

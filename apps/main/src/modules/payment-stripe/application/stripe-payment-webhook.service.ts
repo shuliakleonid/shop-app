@@ -25,12 +25,11 @@ export class StripePaymentWebhookService {
       data = event.data.object;
       eventType = event.type;
       console.log('-> eventType', eventType);
-      this.eventEmitter.emit(PaymentEventType.someOtherEvent, event);
       switch (eventType) {
         case 'checkout.session.completed':
           console.log('-> data', data);
           await this._kafka.produce({
-            topic: 'login',
+            topic: 'payment_order',
             messages: [{ value: `We pay  ${JSON.stringify(data)} ` }],
           });
           break;

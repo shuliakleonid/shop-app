@@ -57,7 +57,7 @@ export class OrdersController {
   }
 
   @Get()
-  async getOrder(@CurrentUser() customerId: number) {
-    return await this.orderQueryRepository.findById(customerId);
+  async getOrder(@CurrentUser() customer) {
+    return await this.orderQueryRepository.findById(customer.userId);
   }
 }

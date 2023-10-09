@@ -29,12 +29,6 @@ export class CreatePaymentOrderHandler
     const order = await this.validateOrder(paymentOrder.orderId, customerId);
     const totalAmount = await this.cartItemQueryRepository.findAllProductsInOrder(order.id);
 
-    // await this.paymentStripeService.createPaymentSession({
-    //   customerId,
-    //   orderDetails: order,
-    //   productsInOrder: order,
-    // });
-
     const { url } = await this.paymentStripeService.createPaymentSession({
       customerId,
       totalAmount,

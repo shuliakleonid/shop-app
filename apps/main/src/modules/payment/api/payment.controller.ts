@@ -18,9 +18,9 @@ export class PaymentStripeController {
     possession: 'any',
   })
   @Post('order')
-  async paymentOrder(@Body() paymentOrder: CreatePaymentOrderDto, @CurrentUser() customerId: number) {
+  async paymentOrder(@Body() paymentOrder: CreatePaymentOrderDto, @CurrentUser() customer) {
     const notification = await this.commandBus.execute<CreatePaymentOrderCommand, ResultNotification<string>>(
-      new CreatePaymentOrderCommand(customerId, paymentOrder),
+      new CreatePaymentOrderCommand(customer.userId, paymentOrder),
     );
     return notification.getData();
   }

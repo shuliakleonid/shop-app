@@ -27,11 +27,11 @@ export class PaymentStripeService {
           price_data: {
             currency: this.currency,
             product_data: {
-              name: 'Product Name', // Название товара или услуги
+              name: 'Product',
             },
-            unit_amount: 1000, // Сумма платежа в минимальных единицах валюты (например, центы для доллара США)
+            unit_amount: params.totalAmount,
           },
-          quantity: 1, // Количество товара или услуги
+          quantity: 1,
         },
       ],
       customer: params.customerId.toString(),
