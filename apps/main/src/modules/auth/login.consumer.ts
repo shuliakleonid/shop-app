@@ -13,7 +13,7 @@ export class LoginConsumer implements OnModuleInit {
         eachMessage: async ({ topic, partition, message }) => {
           console.log({
             source: 'login',
-            message: message.value.toString(),
+            message: JSON.parse(message.value as unknown as string),
             partition: partition.toString(),
             topic: topic.toString(),
           });

@@ -12,8 +12,9 @@ import { OrdersRepository } from './infrastructure/orders.repository';
 import { OrdersQueryRepository } from './infrastructure/orders.query-repository';
 import { KafkaModule } from '@common/modules/kafka/kafka.module';
 import { ProductsQueryRepository } from '@catalog/modules/products/infrastructure/products.query-repository';
+import { UpdateOrderPaymentHandler } from '@orders/modules/orders/application/use-cases/update-order-payment.handler';
 
-const useCases = [CreateOrderHandler, UpdateOrderHandler, DeleteOrderHandler];
+const useCases = [CreateOrderHandler, UpdateOrderHandler, DeleteOrderHandler, UpdateOrderPaymentHandler];
 
 @Module({
   imports: [CqrsModule, KafkaModule, DatabaseModule, TypeOrmModule.forFeature([OrderDetails, Product])],

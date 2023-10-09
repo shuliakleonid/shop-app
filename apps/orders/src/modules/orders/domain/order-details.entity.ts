@@ -48,7 +48,15 @@ export class OrderDetails {
     return orderDetails;
   }
 
-  static update(order: OrderDetails, param: { total: number }) {
-    order.total = param.total;
+  static update(order: OrderDetails, param: { total?: number; state?: OrderState; paymentId?: number }) {
+    if (param.total) {
+      order.total = param.total;
+    }
+    if (param.state) {
+      order.state = param.state;
+    }
+    if (param.paymentId) {
+      order.paymentId = param.paymentId;
+    }
   }
 }

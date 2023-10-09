@@ -1,4 +1,4 @@
-import { Controller, HttpCode, Post } from '@nestjs/common';
+import { Controller, HttpCode, Post, SetMetadata } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { StripePaymentWebhookService } from '../application/stripe-payment-webhook.service';
 import { PaymentInputData, Signature } from '@main/decorators/signature-data.decorator';
@@ -10,6 +10,7 @@ export class StripeController {
 
   @ApiOperation({ summary: 'Webhook for Stripe Api (see stripe official documentation)' })
   @ApiResponse({ status: 204 })
+  @SetMetadata('isPublic', true)
   @HttpCode(204)
   @Post('stripe/webhook')
   async stripeHook(@Signature() inputData: PaymentInputData) {
